@@ -1,7 +1,7 @@
 {
   "description": "This web application offers a modern, visually appealing platform for educational institutions, enhancing user engagement and accessibility for students and staff.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
