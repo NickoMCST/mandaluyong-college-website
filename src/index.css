@@ -1,5 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import 'tailwindcss';
+
+/* ---- Student Portal design tokens (scoped via CSS variables + utility
+   classes inside src/portal — does not touch the main site's body styles) ---- */
+@theme {
+  --color-background: var(--portal-background);
+  --color-foreground: var(--portal-foreground);
+
+  --color-card: var(--portal-card);
+  --color-card-foreground: var(--portal-card-foreground);
+
+  --color-primary: var(--portal-primary);
+  --color-primary-foreground: var(--portal-primary-foreground);
+
+  --color-secondary: var(--portal-secondary);
+  --color-secondary-foreground: var(--portal-secondary-foreground);
+
+  --color-muted: var(--portal-muted);
+  --color-muted-foreground: var(--portal-muted-foreground);
+
+  --color-accent: var(--portal-accent);
+  --color-accent-foreground: var(--portal-accent-foreground);
+
+  --color-border: var(--portal-border);
+  --color-ring: var(--portal-ring);
+
+  --radius-sm: calc(var(--portal-radius) - 2px);
+  --radius-md: var(--portal-radius);
+  --radius-lg: calc(var(--portal-radius) + 2px);
+  --radius-xl: calc(var(--portal-radius) + 6px);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-error: #DC2626;
+}
+
+:root {
+  --portal-background: #F4F6FA;
+  --portal-foreground: #111827;
+
+  --portal-card: #FFFFFF;
+  --portal-card-foreground: #111827;
+
+  --portal-primary: #0057B8;
+  --portal-primary-foreground: #FFFFFF;
+
+  --portal-secondary: #EEF1F6;
+  --portal-secondary-foreground: #374151;
+
+  --portal-muted: #F9FAFB;
+  --portal-muted-foreground: #6B7280;
+
+  --portal-accent: #EEF4FF;
+  --portal-accent-foreground: #0057B8;
+
+  --portal-border: #E3E8EF;
+  --portal-ring: #0057B8;
+
+  --portal-radius: 0.375rem;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 

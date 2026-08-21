@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
-import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PROGRAMS, MOSAIC, ANNOUNCE, HERO_SLIDES, QUICKLINKS, NEWS } from "../data";
+import { Link, useOutletContext } from "react-router";
+import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PROGRAMS, MOSAIC, ANNOUNCE, HERO_SLIDES, QUICKLINKS, NEWS, PORTAL_TRIGGER } from "../data";
 import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
 
 export default function Home() {
+  const { openPortalNotice } = useOutletContext<{ openPortalNotice: () => void }>();
   const [slide, setSlide] = useState(0);
   const total = HERO_SLIDES.length;
 
@@ -78,15 +79,27 @@ export default function Home() {
       <section style={{ background: BLUE_DEEP, padding: "0 32px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "rgba(255,255,255,0.06)", transform: "translateY(-1px)" }} className="quick-grid">
           {QUICKLINKS.map(q => (
-            <Link key={q.label} to={q.to} style={{ background: BLUE_DEEP, padding: "30px 26px", textDecoration: "none", transition: "background 0.2s", display: "block" }}
-              onMouseEnter={e => (e.currentTarget.style.background = "rgba(21,101,192,0.16)")}
-              onMouseLeave={e => (e.currentTarget.style.background = BLUE_DEEP)}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: WHITE }}>{q.label}</span>
-                <span style={{ color: BLUE_MID, fontSize: 18 }}>→</span>
-              </div>
-              <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)" }}>{q.desc}</div>
-            </Link>
+            q.to === PORTAL_TRIGGER ? (
+              <button key={q.label} onClick={openPortalNotice} style={{ background: BLUE_DEEP, padding: "30px 26px", border: "none", textAlign: "left", cursor: "pointer", transition: "background 0.2s", display: "block" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(21,101,192,0.16)")}
+                onMouseLeave={e => (e.currentTarget.style.background = BLUE_DEEP)}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: WHITE }}>{q.label}</span>
+                  <span style={{ color: BLUE_MID, fontSize: 18 }}>→</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)" }}>{q.desc}</div>
+              </button>
+            ) : (
+              <Link key={q.label} to={q.to} style={{ background: BLUE_DEEP, padding: "30px 26px", textDecoration: "none", transition: "background 0.2s", display: "block" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(21,101,192,0.16)")}
+                onMouseLeave={e => (e.currentTarget.style.background = BLUE_DEEP)}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: WHITE }}>{q.label}</span>
+                  <span style={{ color: BLUE_MID, fontSize: 18 }}>→</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)" }}>{q.desc}</div>
+              </Link>
+            )
           ))}
         </div>
       </section>

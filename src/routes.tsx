@@ -8,6 +8,17 @@ import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Student Portal — a self-contained app (its own layout, sidebar, and pages)
+// wired in as a sibling route tree so it keeps its own design untouched and
+// never inherits the public site's header/footer chrome.
+import PortalLayout from "./portal/PortalLayout";
+import PortalDashboard from "./portal/pages/Dashboard";
+import PortalAcademics from "./portal/pages/Academics";
+import PortalEnrollment from "./portal/pages/Enrollment";
+import PortalDocuments from "./portal/pages/Documents";
+import PortalAnnouncements from "./portal/pages/Announcements";
+import PortalSettings from "./portal/pages/Settings";
+
 export const router = createBrowserRouter(
   [
     {
@@ -21,6 +32,18 @@ export const router = createBrowserRouter(
         { path: "events", Component: Events },
         { path: "contact", Component: Contact },
         { path: "*", Component: NotFound },
+      ],
+    },
+    {
+      path: "/portal",
+      Component: PortalLayout,
+      children: [
+        { index: true, Component: PortalDashboard },
+        { path: "academics", Component: PortalAcademics },
+        { path: "enrollment", Component: PortalEnrollment },
+        { path: "documents", Component: PortalDocuments },
+        { path: "announcements", Component: PortalAnnouncements },
+        { path: "settings", Component: PortalSettings },
       ],
     },
   ],

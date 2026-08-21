@@ -23,6 +23,11 @@ export const INK = "#111827";
 export const MUTED = "#6b7280";
 export const WHITE = "#ffffff";
 
+// Sentinel value used in nav/link data structures to mark an entry that
+// should open the Student Portal demo-notice disclaimer instead of routing
+// directly — see <PortalDisclaimerModal /> in layout/Root.tsx.
+export const PORTAL_TRIGGER = "__student-portal__";
+
 export const NAV = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -122,6 +127,7 @@ export const MENU = [
         { label: "Life at MCST",           to: "/campus", sub: "Photos & moments" },
         { label: "Student Organizations",  to: "/campus", sub: "Get involved" },
         { label: "Events & Ceremonies",    to: "/events", sub: "What's happening" },
+        { label: "Student Portal",         to: PORTAL_TRIGGER, sub: "Grades, schedule & documents" },
       ]},
     ],
   },
@@ -168,7 +174,7 @@ export const HERO_SLIDES = [
 ];
 
 export const QUICKLINKS = [
-  { label: "Student Portal · Concept", desc: "Demo only — not a real login", to: "/campus" },
+  { label: "Student Portal", desc: "Grades, schedule, documents & more", to: PORTAL_TRIGGER },
   { label: "Admissions",       desc: "Apply for A.Y. 2026–2027",      to: "/contact" },
   { label: "Program Finder",   desc: "Explore all nine programs",      to: "/programs" },
   { label: "Academic Calendar", desc: "Key dates & events",           to: "/events" },

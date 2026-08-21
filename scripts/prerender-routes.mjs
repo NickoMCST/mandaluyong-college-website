@@ -1,7 +1,7 @@
 ﻿import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 
-const routes = ['about', 'programs', 'campus', 'events', 'contact']
+const routes = ['about', 'programs', 'campus', 'events', 'contact', 'portal']
 const distDir = 'dist'
 const html = readFileSync(join(distDir, 'index.html'), 'utf-8')
 
