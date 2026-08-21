@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://nickomcst.github.io/mandaluyong-college-website/sitemap.xml
