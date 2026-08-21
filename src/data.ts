@@ -7,11 +7,11 @@ export const BASE = "https://www.mandaluyongcollege.edu.ph/images";
 // The seal below is an original placeholder graphic made for this concept —
 // it is not the real MCST seal — bundled locally so the site doesn't depend
 // on an external host for its own branding.
-export const LOGO_URL = "/logo-placeholder.png";
+export const LOGO_URL = `${import.meta.env.BASE_URL}logo-placeholder.png`;
 
 // Background theme played softly by <MusicPlayer /> (see layout/Root.tsx).
 // Swap this file in public/audio/ to change the track.
-export const MUSIC_URL = "/audio/campus-theme.mp3";
+export const MUSIC_URL = `${import.meta.env.BASE_URL}audio/campus-theme.mp3`;
 
 export const BLUE = "#1565c0";
 export const BLUE_DARK = "#0d47a1";
