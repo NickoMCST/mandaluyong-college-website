@@ -2,11 +2,6 @@ import { BLUE, BLUE_MID, INK, MUTED, WHITE } from "../data";
 
 type Program = { code: string; title: string; dept: string; img: string };
 
-/**
- * Program logos are stored as JPGs with a white background on the server.
- * The card sits on a light surface and the logo uses `mixBlendMode: multiply`,
- * so the white background drops out and only the mark itself remains.
- */
 export default function ProgramCard({ p }: { p: Program }) {
   return (
     <div style={{

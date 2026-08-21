@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
-import { NAV, MENU, UTILITY, LOGO_URL, BLUE, BLUE_DARK, BLUE_DEEP, BLUE_MID, CREAM, INK, MUTED, WHITE } from "../data";
+import { NAV, MENU, UTILITY, LOGO_URL, MUSIC_URL, BLUE, BLUE_DARK, BLUE_DEEP, BLUE_MID, CREAM, INK, WHITE } from "../data";
+import MusicPlayer from "../components/MusicPlayer";
 
 export default function Root() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,13 +56,13 @@ export default function Root() {
               Unofficial Student Project · by Lenver Nicko V. Andes
             </span>
             <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
-            {UTILITY.map(u => (
-              <Link key={u.label} to={u.to} style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.05em", color: "rgba(255,255,255,0.6)", textDecoration: "none", transition: "color 0.15s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>{u.label}</Link>
-            ))}
-            <span style={{ width: 1, height: 14, background: "rgba(255,255,255,0.15)" }} />
-            <a href="https://www.facebook.com/MandaluyongCST" target="_blank" rel="noreferrer" style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.05em", color: BLUE_MID, textDecoration: "none" }}>Facebook</a>
+              {UTILITY.map(u => (
+                <Link key={u.label} to={u.to} style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.05em", color: "rgba(255,255,255,0.6)", textDecoration: "none", transition: "color 0.15s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}>{u.label}</Link>
+              ))}
+              <span style={{ width: 1, height: 14, background: "rgba(255,255,255,0.15)" }} />
+              <a href="https://www.facebook.com/MandaluyongCST" target="_blank" rel="noreferrer" style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.05em", color: BLUE_MID, textDecoration: "none" }}>Facebook</a>
             </div>
           </div>
         </div>
@@ -161,7 +162,8 @@ export default function Root() {
       <main><Outlet /></main>
       <Footer />
 
-      {/* Back to top */}
+      <MusicPlayer src={MUSIC_URL} />
+
       <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top"
         style={{
           position: "fixed", bottom: 26, right: 26, zIndex: 90,
@@ -190,7 +192,7 @@ function Footer() {
   const cols = [
     { title: "Academics", links: [["Programs", "/programs"], ["Colleges", "/programs"], ["Program Finder", "/programs"]] },
     { title: "Admissions", links: [["Apply Now", "/contact"], ["Scholarships", "/contact"], ["Requirements", "/contact"]] },
-    { title: "Campus", links: [["Campus Life", "/campus"], ["Events", "/events"], ["Student Portal", "/campus"]] },
+    { title: "Campus", links: [["Campus Life", "/campus"], ["Events", "/events"], ["Student Portal (Concept)", "/campus"]] },
     { title: "About", links: [["Our Story", "/about"], ["Values", "/about"], ["Contact", "/contact"]] },
   ] as const;
 
@@ -227,21 +229,17 @@ function Footer() {
           ))}
         </div>
 
-        {/* Disclaimer */}
         <div style={{ background: "rgba(21,101,192,0.1)", border: "1px solid rgba(21,101,192,0.25)", borderRadius: 3, padding: "16px 20px", marginBottom: 24 }}>
           <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.7, margin: 0 }}>
-            <strong style={{ color: BLUE_MID, fontWeight: 700 }}>Disclaimer:</strong> This website is an independent student project and is <strong style={{ color: "rgba(255,255,255,0.75)" }}>not the official website</strong> of Mandaluyong College of Science and Technology. It is not affiliated with, endorsed by, or maintained by the institution.
+            <strong style={{ color: BLUE_MID, fontWeight: 700 }}>Disclaimer:</strong> This website is an independent student project and is <strong style={{ color: "rgba(255,255,255,0.75)" }}>not the official website</strong> of Mandaluyong College of Science and Technology. It is not affiliated with, endorsed by, or maintained by the institution. Programs, dates, news, and events shown are illustrative concept content for demonstration purposes, not official announcements.
           </p>
         </div>
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 22, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>A project by <strong style={{ color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Lenver Nicko V. Andes</strong> · © 2026 · Unofficial concept redesign</span>
-          <div style={{ display: "flex", gap: 18 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Privacy Policy</span>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>Terms of Service</span>
-          </div>
         </div>
       </div>
     </footer>
   );
 }
+

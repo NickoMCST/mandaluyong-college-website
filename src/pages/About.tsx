@@ -4,10 +4,10 @@ import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 
 const VALUES = [
-  { t: "Academic Excellence", d: "Rigorous, relevant programs that meet national standards and prepare graduates for the board and the workplace." },
-  { t: "Community Service", d: "Learning that reaches beyond the campus — health drives, literacy programs, and outreach across Mandaluyong." },
-  { t: "Integrity & Ethics", d: "We form citizens who lead honestly and act with a strong sense of public responsibility." },
-  { t: "Inclusive Education", d: "Accessible, values-based education open to every learner in the city and its surrounding communities." },
+  { t: "Academic Excellence",  d: "Rigorous, relevant programs that meet national standards and prepare graduates for the board and the workplace." },
+  { t: "Community Service",    d: "Learning that reaches beyond the campus — health drives, literacy programs, and outreach across Mandaluyong." },
+  { t: "Integrity & Ethics",   d: "We form citizens who lead honestly and act with a strong sense of public responsibility." },
+  { t: "Inclusive Education",  d: "Accessible, values-based education open to every learner in the city and its surrounding communities." },
 ];
 
 export default function About() {
@@ -36,7 +36,7 @@ export default function About() {
               <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontStyle: "italic", color: INK, marginBottom: 8, lineHeight: 1.4 }}>
                 "Education that transforms individuals and uplifts communities."
               </div>
-              <div style={{ fontSize: 11, color: MUTED, letterSpacing: "0.1em", textTransform: "uppercase" }}>Mission Statement</div>
+              <div style={{ fontSize: 11, color: MUTED, letterSpacing: "0.1em", textTransform: "uppercase" }}>Illustrative Mission Statement — Concept Content</div>
             </div>
           </div>
 
@@ -58,11 +58,11 @@ export default function About() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)" }} className="values-grid">
             {VALUES.map((v, i) => (
               <Reveal key={v.t} delay={(i % 2) * 90}>
-              <div style={{ background: BLUE_DEEP, padding: "40px 36px", height: "100%" }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, fontWeight: 700, color: BLUE_MID, marginBottom: 14 }}>0{i + 1}</div>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: WHITE, marginBottom: 10 }}>{v.t}</h3>
-                <p style={{ fontFamily: "'Lora', serif", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.75 }}>{v.d}</p>
-              </div>
+                <div style={{ background: BLUE_DEEP, padding: "40px 36px", height: "100%" }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, fontWeight: 700, color: BLUE_MID, marginBottom: 14 }}>0{i + 1}</div>
+                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: WHITE, marginBottom: 10 }}>{v.t}</h3>
+                  <p style={{ fontFamily: "'Lora', serif", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.75 }}>{v.d}</p>
+                </div>
               </Reveal>
             ))}
           </div>

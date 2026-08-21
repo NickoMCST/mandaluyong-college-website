@@ -7,11 +7,19 @@ import siteConfiguration from './.figma/make/site.json'
 
 // Vite config — https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
+  // "development" mode emits inline sourcemaps and skips minification —
+  // useful for local debugging builds.
   const emitSourcemaps = mode === 'development'
 
+  // GitHub Pages serves this project from https://USERNAME.github.io/REPOSITORY-NAME/,
+  // so the build needs to know the repository name to resolve asset URLs and
+  // routes correctly. Set BASE_PATH in the deploy workflow (see
+  // .github/workflows/deploy.yml) to "/REPOSITORY-NAME/". Locally, or when
+  // BASE_PATH isn't set, the app is served from the domain root.
+  const base = process.env.BASE_PATH || (process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/')
+
   return {
-    base: process.env.BASE_PATH ?? (process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/'),
+    base,
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,

@@ -8,18 +8,21 @@ import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: Root,
-    children: [
-      { index: true, Component: Home },
-      { path: "about", Component: About },
-      { path: "programs", Component: Programs },
-      { path: "campus", Component: Campus },
-      { path: "events", Component: Events },
-      { path: "contact", Component: Contact },
-      { path: "*", Component: NotFound },
-    ],
-  },
-], { basename: import.meta.env.BASE_URL });
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      Component: Root,
+      children: [
+        { index: true, Component: Home },
+        { path: "about", Component: About },
+        { path: "programs", Component: Programs },
+        { path: "campus", Component: Campus },
+        { path: "events", Component: Events },
+        { path: "contact", Component: Contact },
+        { path: "*", Component: NotFound },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL },
+);

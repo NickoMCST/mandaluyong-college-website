@@ -1,10 +1,18 @@
 {
-  "description": "This web application offers a modern, visually appealing platform for educational institutions, enhancing user engagement and accessibility for students and staff.",
+  "title": "MCST Website Redesign Concept | Portfolio Project",
+  "description": "An independent student portfolio project reimagining the Mandaluyong College of Science and Technology website. Not affiliated with or endorsed by MCST.",
+  "language": "en",
   "robots": {
     "index": true
   },
+  "icons": {
+    "icon": "/favicon.png"
+  },
+  "openGraph": {
+    "image": "/og-image.png"
+  },
   "accessibility": {
-    "addBypassLinks": false,
+    "addBypassLinks": true,
     "ignoreReducedMotion": false
   }
 }

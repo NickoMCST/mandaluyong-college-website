@@ -13,6 +13,14 @@ html { scroll-behavior: smooth; }
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes ringPulse {
+  0%   { transform: scale(1);    opacity: 0.85; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+@keyframes eqBar {
+  0%, 100% { height: 4px; }
+  50%      { height: 15px; }
+}
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -29,7 +37,6 @@ body {
 
 input, textarea, select { font-family: inherit; }
 
-/* Comfortable focus ring for keyboard users */
 a:focus-visible, button:focus-visible, input:focus-visible,
 textarea:focus-visible, select:focus-visible {
   outline: 2px solid #1976d2;
@@ -37,10 +44,8 @@ textarea:focus-visible, select:focus-visible {
   border-radius: 2px;
 }
 
-/* Pause the announcement ticker on hover so it can be read */
 .marquee-track:hover { animation-play-state: paused; }
 
-/* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -78,7 +83,6 @@ textarea:focus-visible, select:focus-visible {
   .mosaic { grid-template-columns: 1fr !important; }
 }
 
-/* Narrow phones: stack event cards so the thumbnail spans full width */
 @media (max-width: 520px) {
   .events-card { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; }
   .events-card-img { width: 100% !important; height: 180px !important; }

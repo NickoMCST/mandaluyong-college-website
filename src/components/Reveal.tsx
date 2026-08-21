@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-/**
- * Fades + lifts its children into view the first time they enter the viewport.
- * Falls back to visible immediately if IntersectionObserver is unavailable or
- * the user prefers reduced motion.
- */
 export default function Reveal({ children, delay = 0, as: Tag = "div" }: {
   children: ReactNode;
   delay?: number;

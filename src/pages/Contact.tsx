@@ -1,6 +1,9 @@
-import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, WHITE, PROGRAMS } from "../data";
+import { useState } from "react";
+import { LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, WHITE, PROGRAMS } from "../data";
 
 export default function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+
   return (
     <section style={{ paddingTop: 102, background: BLUE_DEEP }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "90px 32px 100px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }} className="contact-grid">
@@ -41,45 +44,75 @@ export default function Contact() {
           </div>
         </div>
 
-        <form onSubmit={e => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          {[
-            { label: "Full Name", type: "text", placeholder: "Juan dela Cruz" },
-            { label: "Email Address", type: "email", placeholder: "juan@email.com" },
-          ].map(f => (
-            <div key={f.label}>
-              <label style={labelStyle}>{f.label}</label>
-              <input type={f.type} placeholder={f.placeholder} style={fieldStyle}
+        {submitted ? (
+          <div role="status" aria-live="polite" style={{
+            background: "rgba(21,101,192,0.12)", border: "1px solid rgba(21,101,192,0.3)",
+            borderRadius: 3, padding: "32px 28px",
+          }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: WHITE, marginBottom: 10 }}>
+              Thanks for trying the demo form
+            </div>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: 20 }}>
+              This is a portfolio concept — there's no backend, so nothing was actually sent or delivered anywhere.
+              In a real deployment, this form would connect to an admissions inbox or CRM.
+            </p>
+            <button type="button" onClick={() => setSubmitted(false)} style={{
+              padding: "10px 22px", background: "transparent", color: BLUE_MID, border: `1px solid ${BLUE_MID}`,
+              fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
+              borderRadius: 1, cursor: "pointer",
+            }}>
+              Try Again
+            </button>
+          </div>
+        ) : (
+          <form
+            onSubmit={e => { e.preventDefault(); setSubmitted(true); }}
+            aria-label="Demo admissions inquiry form — not connected to a real backend"
+            style={{ display: "flex", flexDirection: "column", gap: 20 }}
+          >
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.6, margin: 0 }}>
+              Demo form — part of an unofficial portfolio project. Submissions are not sent anywhere.
+            </p>
+
+            {[
+              { id: "contact-name",  label: "Full Name",     type: "text",  placeholder: "Juan dela Cruz" },
+              { id: "contact-email", label: "Email Address", type: "email", placeholder: "juan@email.com" },
+            ].map(f => (
+              <div key={f.id}>
+                <label htmlFor={f.id} style={labelStyle}>{f.label}</label>
+                <input id={f.id} name={f.id} type={f.type} placeholder={f.placeholder} required style={fieldStyle}
+                  onFocus={e => (e.target.style.borderBottomColor = BLUE_MID)}
+                  onBlur={e => (e.target.style.borderBottomColor = "rgba(255,255,255,0.15)")} />
+              </div>
+            ))}
+
+            <div>
+              <label htmlFor="contact-program" style={labelStyle}>Program of Interest</label>
+              <select id="contact-program" name="program" style={{ ...fieldStyle, color: "rgba(255,255,255,0.7)" }}>
+                <option value="" style={{ background: BLUE_DEEP }}>Select a program…</option>
+                {PROGRAMS.map(p => <option key={p.code} value={p.code} style={{ background: BLUE_DEEP }}>{p.title}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" style={labelStyle}>Message</label>
+              <textarea id="contact-message" name="message" rows={4} placeholder="Your inquiry…" style={{ ...fieldStyle, resize: "none" }}
                 onFocus={e => (e.target.style.borderBottomColor = BLUE_MID)}
                 onBlur={e => (e.target.style.borderBottomColor = "rgba(255,255,255,0.15)")} />
             </div>
-          ))}
 
-          <div>
-            <label style={labelStyle}>Program of Interest</label>
-            <select style={{ ...fieldStyle, color: "rgba(255,255,255,0.7)" }}>
-              <option value="" style={{ background: BLUE_DEEP }}>Select a program…</option>
-              {PROGRAMS.map(p => <option key={p.code} value={p.code} style={{ background: BLUE_DEEP }}>{p.title}</option>)}
-            </select>
-          </div>
-
-          <div>
-            <label style={labelStyle}>Message</label>
-            <textarea rows={4} placeholder="Your inquiry…" style={{ ...fieldStyle, resize: "none" }}
-              onFocus={e => (e.target.style.borderBottomColor = BLUE_MID)}
-              onBlur={e => (e.target.style.borderBottomColor = "rgba(255,255,255,0.15)")} />
-          </div>
-
-          <button type="submit" style={{
-            padding: "14px 32px", background: BLUE, color: WHITE, border: "none",
-            fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase",
-            borderRadius: 1, cursor: "pointer", alignSelf: "flex-start",
-            transition: "background 0.15s, transform 0.15s",
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = BLUE_MID; e.currentTarget.style.transform = "translateY(-2px)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = BLUE; e.currentTarget.style.transform = "none"; }}>
-            Send Inquiry
-          </button>
-        </form>
+            <button type="submit" style={{
+              padding: "14px 32px", background: BLUE, color: WHITE, border: "none",
+              fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase",
+              borderRadius: 1, cursor: "pointer", alignSelf: "flex-start",
+              transition: "background 0.15s, transform 0.15s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = BLUE_MID; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = BLUE; e.currentTarget.style.transform = "none"; }}>
+              Send Inquiry (Demo)
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );

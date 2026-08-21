@@ -9,7 +9,7 @@ export default function Events() {
   return (
     <>
       <PageHero eyebrow="Updates" title="Recent Events"
-        subtitle="Ceremonies, seminars, and outreach from across the MCST community."
+        subtitle="Illustrative event listings for this concept project — dates and details are for demonstration, not an official MCST calendar."
         img={`${BASE}/RecentEvents/1.jpeg`} />
 
       <section style={{ padding: "90px 32px 100px", background: CREAM }}>
@@ -51,14 +51,14 @@ export default function Events() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 3 }} className="values-grid">
             {EVENTS.map((ev, i) => (
               <Reveal key={i} delay={(i % 2) * 90}>
-              <div className="events-card" style={{ display: "flex", gap: 20, background: WHITE, border: "1px solid rgba(10,22,40,0.07)", padding: 18, alignItems: "center", height: "100%" }}>
-                <img src={ev.img} alt={ev.title} loading="lazy" decoding="async" className="events-card-img" style={{ width: 120, height: 96, objectFit: "cover", flexShrink: 0, borderRadius: 2, background: "#dcdcd6" }} />
-                <div>
-                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BLUE, marginBottom: 6 }}>{ev.tag} — {ev.date}, {ev.year}</div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 6 }}>{ev.title}</h3>
-                  <p style={{ fontFamily: "'Lora', serif", fontSize: 13.5, color: MUTED, lineHeight: 1.6 }}>{ev.desc}</p>
+                <div className="events-card" style={{ display: "flex", gap: 20, background: WHITE, border: "1px solid rgba(10,22,40,0.07)", padding: 18, alignItems: "center", height: "100%" }}>
+                  <img src={ev.img} alt={ev.title} loading="lazy" decoding="async" className="events-card-img" style={{ width: 120, height: 96, objectFit: "cover", flexShrink: 0, borderRadius: 2, background: "#dcdcd6" }} />
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BLUE, marginBottom: 6 }}>{ev.tag} — {ev.date}, {ev.year}</div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 6 }}>{ev.title}</h3>
+                    <p style={{ fontFamily: "'Lora', serif", fontSize: 13.5, color: MUTED, lineHeight: 1.6 }}>{ev.desc}</p>
+                  </div>
                 </div>
-              </div>
               </Reveal>
             ))}
           </div>

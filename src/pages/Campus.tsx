@@ -1,17 +1,18 @@
-import { BASE, BLUE, CREAM, INK, MUTED } from "../data";
+import { BASE, CREAM, MUTED } from "../data";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 
+// Each image is matched to its caption based on the official MCST photo archive
 const GALLERY = [
-  { src: `${BASE}/slides/image1.jpg`,   label: "The Campus" },
-  { src: `${BASE}/slides/image4.jpeg`,  label: "Academic Life" },
-  { src: `${BASE}/slides/image6.jpg`,   label: "Student Activities" },
-  { src: `${BASE}/slides/image7.jpg`,   label: "Ceremonies" },
-  { src: `${BASE}/slides/image8.jpeg`,  label: "Gatherings" },
-  { src: `${BASE}/slides/image9.jpeg`,  label: "Fellowship" },
-  { src: `${BASE}/slides/image10.jpeg`, label: "Community" },
-  { src: `${BASE}/slides/image12.jpeg`, label: "Organizations" },
-  { src: `${BASE}/slides/image5.webp`,  label: "Campus Grounds" },
+  { src: `${BASE}/slides/mcst-drone.png`, label: "The Campus" },
+  { src: `${BASE}/slides/image4.jpeg`,    label: "Academic Life" },
+  { src: `${BASE}/slides/image6.jpg`,     label: "Student Activities" },
+  { src: `${BASE}/slides/image7.jpg`,     label: "Ceremonies" },
+  { src: `${BASE}/slides/image11.jpeg`,   label: "Gatherings" },
+  { src: `${BASE}/slides/image12.jpeg`,   label: "Fellowship" },
+  { src: `${BASE}/slides/image10.jpeg`,   label: "Community" },
+  { src: `${BASE}/slides/image13.jpeg`,   label: "Organizations" },
+  { src: `${BASE}/slides/image5.webp`,    label: "Campus Grounds" },
 ];
 
 export default function Campus() {
@@ -26,12 +27,12 @@ export default function Campus() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }} className="gallery-grid">
             {GALLERY.map((g, i) => (
               <Reveal key={i} delay={(i % 3) * 80}>
-              <div style={{ position: "relative", overflow: "hidden", aspectRatio: "4 / 3", background: "#dcdcd6", borderRadius: 2 }}>
-                <img src={g.src} alt={g.label} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
-                  onMouseEnter={e => { (e.target as HTMLElement).style.transform = "scale(1.05)"; (e.target as HTMLElement).style.filter = "brightness(0.72)"; }}
-                  onMouseLeave={e => { (e.target as HTMLElement).style.transform = "scale(1)"; (e.target as HTMLElement).style.filter = "brightness(1)"; }} />
-                <span style={{ position: "absolute", bottom: 12, left: 14, fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.92)", letterSpacing: "0.05em", textShadow: "0 1px 5px rgba(0,0,0,0.7)" }}>{g.label}</span>
-              </div>
+                <div style={{ position: "relative", overflow: "hidden", aspectRatio: "4 / 3", background: "#dcdcd6", borderRadius: 2 }}>
+                  <img src={g.src} alt={g.label} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
+                    onMouseEnter={e => { (e.target as HTMLElement).style.transform = "scale(1.05)"; (e.target as HTMLElement).style.filter = "brightness(0.72)"; }}
+                    onMouseLeave={e => { (e.target as HTMLElement).style.transform = "scale(1)"; (e.target as HTMLElement).style.filter = "brightness(1)"; }} />
+                  <span style={{ position: "absolute", bottom: 12, left: 14, fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.92)", letterSpacing: "0.05em", textShadow: "0 1px 5px rgba(0,0,0,0.7)" }}>{g.label}</span>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -43,3 +44,4 @@ export default function Campus() {
     </>
   );
 }
+

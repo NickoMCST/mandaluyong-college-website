@@ -32,8 +32,10 @@ export default function Home() {
               <img src={LOGO_URL} alt="MCST seal" style={{ width: 56, height: 56, objectFit: "contain", filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.5))" }} />
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>{s.kicker}</div>
             </div>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.6rem, 6.5vw, 5rem)", fontWeight: 700, lineHeight: 1.06, color: WHITE, marginBottom: 6, letterSpacing: "-0.02em" }}>{s.title}</h1>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.6rem, 6.5vw, 5rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.06, color: "rgba(255,255,255,0.55)", marginBottom: 30, letterSpacing: "-0.02em" }}>{s.titleItalic}</h1>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.6rem, 6.5vw, 5rem)", fontWeight: 700, lineHeight: 1.06, color: WHITE, marginBottom: 30, letterSpacing: "-0.02em" }}>
+              <span style={{ display: "block", marginBottom: 6 }}>{s.title}</span>
+              <span style={{ display: "block", fontWeight: 400, fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>{s.titleItalic}</span>
+            </h1>
             <p style={{ fontFamily: "'Lora', serif", fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.8, color: "rgba(255,255,255,0.68)", marginBottom: 40, maxWidth: 560 }}>{s.body}</p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <Link to={s.ctaTo} style={btnPrimary}
@@ -45,7 +47,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Carousel controls */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 48 }}>
             <div style={{ display: "flex", gap: 8 }}>
               {HERO_SLIDES.map((_, i) => (
@@ -133,34 +134,35 @@ export default function Home() {
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 14 }}>Campus Bulletin</p>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: INK, lineHeight: 1.15 }}>Latest News</h2>
+              <p style={{ fontSize: 12.5, color: MUTED, marginTop: 6, fontStyle: "italic" }}>Illustrative content for this concept project — not real announcements.</p>
             </div>
             <Link to="/events" style={{ color: BLUE, fontWeight: 700, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>All updates →</Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="prog-grid">
             {NEWS.map((n, i) => (
               <Reveal key={i} delay={(i % 3) * 80}>
-              <Link to="/events" style={{ textDecoration: "none", display: "block", background: WHITE, borderRadius: 3, overflow: "hidden", border: "1px solid rgba(10,22,40,0.07)", transition: "transform 0.2s, box-shadow 0.2s" }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 18px 40px rgba(10,22,40,0.12)"; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
-                <div style={{ aspectRatio: "16 / 10", overflow: "hidden", background: CREAM_DARK }}>
-                  <img src={n.img} alt={n.title} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                </div>
-                <div style={{ padding: "22px 22px 26px" }}>
-                  <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
-                    <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: WHITE, background: BLUE, padding: "3px 8px", borderRadius: 1 }}>{n.tag}</span>
-                    <span style={{ fontSize: 12, color: MUTED }}>{n.date}</span>
+                <Link to="/events" style={{ textDecoration: "none", display: "block", background: WHITE, borderRadius: 3, overflow: "hidden", border: "1px solid rgba(10,22,40,0.07)", transition: "transform 0.2s, box-shadow 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 18px 40px rgba(10,22,40,0.12)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
+                  <div style={{ aspectRatio: "16 / 10", overflow: "hidden", background: CREAM_DARK }}>
+                    <img src={n.img} alt={n.title} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 8 }}>{n.title}</h3>
-                  <p style={{ fontFamily: "'Lora', serif", fontSize: 14, color: MUTED, lineHeight: 1.65 }}>{n.desc}</p>
-                </div>
-              </Link>
+                  <div style={{ padding: "22px 22px 26px" }}>
+                    <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
+                      <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: WHITE, background: BLUE, padding: "3px 8px", borderRadius: 1 }}>{n.tag}</span>
+                      <span style={{ fontSize: 12, color: MUTED }}>{n.date}</span>
+                    </div>
+                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 8 }}>{n.title}</h3>
+                    <p style={{ fontFamily: "'Lora', serif", fontSize: 14, color: MUTED, lineHeight: 1.65 }}>{n.desc}</p>
+                  </div>
+                </Link>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CAMPUS PREVIEW */}
+      {/* CAMPUS PREVIEW MOSAIC */}
       <section style={{ padding: "100px 32px", background: CREAM_DARK }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20 }}>

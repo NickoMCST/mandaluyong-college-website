@@ -1,6 +1,5 @@
 import { BLUE_DEEP, WHITE } from "../data";
 
-/** Compact banner used at the top of every interior page. */
 export default function PageHero({ eyebrow, title, subtitle, img }: {
   eyebrow: string; title: string; subtitle?: string; img: string;
 }) {
