@@ -18,25 +18,25 @@ import logo from './assets/logo.png';
 const navGroups = [
   {
     label: null,
-    items: [{ name: 'Dashboard', href: '/', icon: LayoutDashboard }],
+    items: [{ name: 'Dashboard', href: '/portal', icon: LayoutDashboard }],
   },
   {
     label: 'Academic',
     items: [
-      { name: 'Academics', href: '/academics', icon: GraduationCap },
-      { name: 'Enrollment', href: '/enrollment', icon: BookOpen },
+      { name: 'Academics', href: '/portal/academics', icon: GraduationCap },
+      { name: 'Enrollment', href: '/portal/enrollment', icon: BookOpen },
     ],
   },
   {
     label: 'Services',
     items: [
-      { name: 'Documents', href: '/documents', icon: FileText },
-      { name: 'Announcements', href: '/announcements', icon: Bell },
+      { name: 'Documents', href: '/portal/documents', icon: FileText },
+      { name: 'Announcements', href: '/portal/announcements', icon: Bell },
     ],
   },
   {
     label: 'Account',
-    items: [{ name: 'Settings', href: '/settings', icon: Settings }],
+    items: [{ name: 'Settings', href: '/portal/settings', icon: Settings }],
   },
 ];
 
@@ -76,8 +76,8 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
             <div className="space-y-0.5">
               {group.items.map((item) => {
                 const isActive =
-                  item.href === '/'
-                    ? location.pathname === '/'
+                  item.href === '/portal'
+                    ? location.pathname === '/portal'
                     : location.pathname.startsWith(item.href);
                 return (
                   <NavLink
