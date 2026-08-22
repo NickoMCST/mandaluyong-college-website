@@ -66,12 +66,25 @@
       }
     }
     </script>
-    <!-- figma:head-end -->
+
+    <!-- Console security warning, fires on every page of this SPA -->
+    <script type="text/javascript">
+      console.log(
+        "%cStop!",
+        "color: red; font-size: 60px; font-weight: bold; text-shadow: 1px 1px 0 #000;"
+      );
+      console.log(
+        "%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a feature or \"hack\" an account, it's a scam and could give them access to your account.",
+        "font-size: 16px;"
+      );
+      console.log(
+        "%cIf you're a developer curious about this site, contact Nicko (NickoMCST) on GitHub: https://github.com/NickoMCST",
+        "font-size: 14px; color: #999;"
+      );
+    </script>
   </head>
   <body>
-    <!-- figma:body-start -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- figma:body-end -->
   </body>
 </html>
