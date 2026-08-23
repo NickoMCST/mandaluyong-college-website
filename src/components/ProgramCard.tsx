@@ -1,4 +1,5 @@
 import { BLUE, INK, MUTED } from "../data";
+import { useImg } from "../lib/imageOverrides";
 
 type Program = { code: string; title: string; dept: string; img: string };
 
@@ -7,6 +8,7 @@ type Program = { code: string; title: string; dept: string; img: string };
 // watermark-style monogram, since these letters (BACOM, BSIS...) are how
 // students actually refer to the programs day-to-day.
 export default function ProgramCard({ p }: { p: Program }) {
+  const img = useImg();
   return (
     <div
       style={{
@@ -60,7 +62,7 @@ export default function ProgramCard({ p }: { p: Program }) {
 
       <img
         className="prog-logo"
-        src={p.img}
+        src={img(`program.${p.code}`, p.img)}
         alt={`${p.code} logo`}
         loading="lazy"
         decoding="async"
