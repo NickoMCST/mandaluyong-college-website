@@ -61,10 +61,10 @@ export default function Dashboard() {
   const [tab, setTab] = useState<'announcements' | 'subjects'>('announcements');
 
   return (
-    <div className="-mx-5 md:-mx-10 -mt-8">
+    <div className="-mt-8">
       {/* Welcome banner */}
       <div
-        className="relative overflow-hidden px-4 sm:px-6 md:px-8 py-5 md:py-7"
+        className="relative overflow-hidden px-4 sm:px-6 md:px-8 py-5 md:py-7 rounded-t-xl"
         style={{
           background: 'linear-gradient(105deg, #0b1d52 0%, #1a3a8a 55%, #1a5fb4 100%)',
           borderBottom: '3px solid #2575d4',
@@ -115,7 +115,7 @@ export default function Dashboard() {
               <span className="w-2 h-2 rounded-full" style={{ background: '#5aad6a' }} />
               Enrolled
             </span>
-            <span style={{ fontSize: 11, color: '#2a5a94' }}>2nd Semester, A.Y. 2025–2026</span>
+            <span style={{ fontSize: 11, color: '#000000' }}>2nd Semester, A.Y. 2025–2026</span>
           </div>
         </div>
 
