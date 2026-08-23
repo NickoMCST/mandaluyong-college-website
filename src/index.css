@@ -141,6 +141,27 @@ textarea:focus-visible, select:focus-visible {
   .footer-grid { grid-template-columns: 1fr 1fr !important; }
   .mosaic { grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; }
   .mosaic > div { grid-area: unset !important; aspect-ratio: 4 / 3; }
+  .programs-catalog-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Academic Catalog / Featured Programs: scale the panel down for phones so
+   the watermark code number, padding, and accordion rows don't overflow or
+   feel cramped on small screens. */
+@media (max-width: 700px) {
+  .programs-section { padding: 48px 20px 64px !important; }
+  .programs-heading-row { border-bottom-width: 1px !important; padding-bottom: 16px !important; }
+  .programs-featured-panel { padding: 30px 22px 26px !important; }
+  .programs-featured-head { gap: 14px !important; margin-bottom: 22px !important; flex-wrap: wrap; }
+  .programs-featured-logo { width: 52px !important; height: 52px !important; }
+  .programs-featured-logo img { width: 44px !important; height: 44px !important; }
+  .programs-featured-code { font-size: 40px !important; margin-bottom: 0 !important; }
+  .programs-cta-row { gap: 16px !important; }
+  .programs-catalog-row { padding: 14px 16px !important; gap: 12px !important; }
+}
+
+@media (max-width: 420px) {
+  .programs-featured-panel { padding: 24px 16px 22px !important; }
+  .programs-featured-code { font-size: 34px !important; }
 }
 
 @media (max-width: 600px) {
