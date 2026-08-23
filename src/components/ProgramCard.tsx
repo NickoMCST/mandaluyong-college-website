@@ -1,77 +1,109 @@
-import { BLUE, INK, MUTED } from "../data";
+import { BLUE, BLUE_DARK, INK, MUTED, CREAM_DARK, WHITE } from "../data";
 import { useImg } from "../lib/imageOverrides";
 
-type Program = { code: string; title: string; dept: string; img: string };
+type Program = {
+  code: string;
+  title: string;
+  short: string;
+  dept: string;
+  img: string;
+  desc: string;
+  year: string;
+  featured: boolean;
+};
 
-// Catalog-row treatment: reads like an entry in a printed college prospectus
-// rather than a dashboard card. The code is set large and in outline as a
-// watermark-style monogram, since these letters (BACOM, BSIS...) are how
-// students actually refer to the programs day-to-day.
+// Real catalog card: logo, department, title, and description are all
+// visible by default — nothing is hidden behind hover. Hover just lifts
+// the card and warms the border, the way a physical prospectus page would
+// catch the light.
 export default function ProgramCard({ p }: { p: Program }) {
   const img = useImg();
+
   return (
     <div
+      className="prog-card"
       style={{
         position: "relative",
-        display: "grid",
-        gridTemplateColumns: "1fr auto",
-        alignItems: "center",
-        gap: 18,
-        padding: "26px 4px",
-        borderTop: "1px solid rgba(10,22,40,0.14)",
+        display: "flex",
+        flexDirection: "column",
+        background: WHITE,
+        border: `1px solid ${p.featured ? BLUE : "rgba(10,22,40,0.12)"}`,
+        borderRadius: 4,
+        padding: "24px 22px",
+        transition: "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease",
         cursor: "pointer",
-        overflow: "hidden",
       }}
-      className="prog-row"
       onMouseEnter={e => {
-        e.currentTarget.querySelector(".prog-title")!.setAttribute("style",
-          "font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:#1565c0;line-height:1.3;margin-bottom:6px;transition:color .2s;transform:translateX(6px);transition-property:color,transform;transition-duration:.25s");
-        (e.currentTarget.querySelector(".prog-code") as HTMLElement).style.color = "rgba(21,101,192,0.16)";
-        (e.currentTarget.querySelector(".prog-logo") as HTMLElement).style.opacity = "1";
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = "0 18px 40px rgba(10,22,40,0.12)";
+        e.currentTarget.style.borderColor = BLUE;
       }}
       onMouseLeave={e => {
-        e.currentTarget.querySelector(".prog-title")!.setAttribute("style",
-          "font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:#111827;line-height:1.3;margin-bottom:6px;transform:translateX(0);transition-property:color,transform;transition-duration:.25s");
-        (e.currentTarget.querySelector(".prog-code") as HTMLElement).style.color = "rgba(10,22,40,0.06)";
-        (e.currentTarget.querySelector(".prog-logo") as HTMLElement).style.opacity = "0";
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.borderColor = p.featured ? BLUE : "rgba(10,22,40,0.12)";
       }}
     >
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: BLUE, marginBottom: 8 }}>
-          {p.dept}
+      {p.featured && (
+        <span
+          style={{
+            position: "absolute", top: 0, right: 22, transform: "translateY(-50%)",
+            background: BLUE, color: WHITE, fontSize: 9.5, fontWeight: 700,
+            letterSpacing: "0.14em", textTransform: "uppercase",
+            padding: "5px 10px", borderRadius: 2,
+          }}
+        >
+          Featured
+        </span>
+      )}
+
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
+        <div
+          style={{
+            width: 52, height: 52, borderRadius: 4, flexShrink: 0,
+            background: CREAM_DARK, display: "flex", alignItems: "center", justifyContent: "center",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={img(`program.${p.code}`, p.img)}
+            alt={`${p.code} logo`}
+            loading="lazy"
+            decoding="async"
+            onError={e => {
+              // Fall back to a text monogram rather than leaving a blank tile.
+              const el = e.target as HTMLImageElement;
+              el.style.display = "none";
+              const fallback = el.nextElementSibling as HTMLElement | null;
+              if (fallback) fallback.style.display = "flex";
+            }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", padding: 6 }}
+          />
+          <span
+            aria-hidden
+            style={{
+              display: "none", width: "100%", height: "100%", alignItems: "center", justifyContent: "center",
+              fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 15, color: BLUE_DARK,
+            }}
+          >
+            {p.code.slice(0, 4)}
+          </span>
         </div>
-        <h3 className="prog-title" style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 6, transitionProperty: "color, transform", transitionDuration: "0.25s" }}>
-          {p.title}
-        </h3>
-        <div style={{ fontSize: 11.5, color: MUTED, letterSpacing: "0.04em" }}>{p.code}</div>
+        <div>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BLUE, marginBottom: 4 }}>
+            {p.dept}
+          </div>
+          <div style={{ fontSize: 11, color: MUTED, letterSpacing: "0.04em" }}>{p.code} · {p.year}</div>
+        </div>
       </div>
 
-      {/* watermark code, sits behind the title, becomes near-invisible on hover to make way for the logo */}
-      <span
-        className="prog-code"
-        aria-hidden
-        style={{
-          position: "absolute", right: 4, top: "50%", transform: "translateY(-50%)",
-          fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 54,
-          letterSpacing: "0.01em", color: "rgba(10,22,40,0.06)", pointerEvents: "none",
-          transition: "color 0.25s", whiteSpace: "nowrap",
-        }}
-      >
-        {p.code}
-      </span>
+      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 10 }}>
+        {p.title}
+      </h3>
 
-      <img
-        className="prog-logo"
-        src={img(`program.${p.code}`, p.img)}
-        alt={`${p.code} logo`}
-        loading="lazy"
-        decoding="async"
-        onError={e => { (e.target as HTMLImageElement).style.visibility = "hidden"; }}
-        style={{
-          position: "relative", zIndex: 1, width: 44, height: 44, objectFit: "contain",
-          mixBlendMode: "multiply", opacity: 0, transition: "opacity 0.25s",
-        }}
-      />
+      <p style={{ fontSize: 13.5, lineHeight: 1.65, color: MUTED, marginBottom: 0 }}>
+        {p.desc}
+      </p>
     </div>
   );
 }
