@@ -26,6 +26,7 @@ export default function ProgramCard({ p }: { p: Program }) {
         position: "relative",
         display: "flex",
         flexDirection: "column",
+        height: "100%",
         background: WHITE,
         border: `1px solid ${p.featured ? BLUE : "rgba(10,22,40,0.12)"}`,
         borderRadius: 4,
@@ -101,7 +102,15 @@ export default function ProgramCard({ p }: { p: Program }) {
         {p.title}
       </h3>
 
-      <p style={{ fontSize: 13.5, lineHeight: 1.65, color: MUTED, marginBottom: 0 }}>
+      <p
+        style={{
+          fontSize: 13.5, lineHeight: 1.65, color: MUTED, marginBottom: 0,
+          display: "-webkit-box",
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
         {p.desc}
       </p>
     </div>
