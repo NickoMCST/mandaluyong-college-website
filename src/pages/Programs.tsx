@@ -163,7 +163,7 @@ export default function Programs() {
             <p style={{ fontSize: 12, color: MUTED, margin: 0 }}>
               All programs are accredited by the Commission on Higher Education (CHED), Republic of the Philippines.
             </p>
-            
+            <a
               href="#"
               style={{ fontSize: 12, fontWeight: 600, color: BLUE, letterSpacing: "0.08em", textTransform: "uppercase", textDecoration: "none", borderBottom: `1px solid ${BLUE}`, paddingBottom: 2 }}
             >
