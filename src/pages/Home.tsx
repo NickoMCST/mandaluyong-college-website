@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useOutletContext } from "react-router";
-import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PROGRAMS, MOSAIC, ANNOUNCE, HERO_SLIDES, QUICKLINKS, NEWS, PORTAL_TRIGGER } from "../data";
+import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PROGRAMS, MOSAIC, ANNOUNCE, HERO_SLIDES, QUICKLINKS, NEWS, PORTAL_TRIGGER, ABOUT_CAMPUS_PHOTO } from "../data";
 import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
+import { useImg } from "../lib/imageOverrides";
 
 export default function Home() {
   const { openPortalNotice } = useOutletContext<{ openPortalNotice: () => void }>();
+  const img = useImg();
   const [slide, setSlide] = useState(0);
   const total = HERO_SLIDES.length;
 
@@ -21,7 +23,7 @@ export default function Home() {
       {/* HERO CAROUSEL */}
       <section style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column", justifyContent: "flex-end", overflow: "hidden", background: BLUE_DEEP }}>
         {HERO_SLIDES.map((sl, i) => (
-          <img key={i} src={sl.img} alt="" aria-hidden
+          <img key={i} src={img(`home.hero.${i}`, sl.img)} alt="" aria-hidden
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: i === slide ? 0.44 : 0, transition: "opacity 1s ease", transform: i === slide ? "scale(1.04)" : "scale(1)", transitionProperty: "opacity, transform", transitionDuration: "1s, 7s" }} />
         ))}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,22,40,0.35) 0%, rgba(10,22,40,0.55) 45%, rgba(10,22,40,0.92) 82%, #0a1628 100%)" }} />
@@ -30,7 +32,7 @@ export default function Home() {
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "0 32px 84px", width: "100%" }}>
           <div key={slide} style={{ maxWidth: 830, animation: "fadeUp 0.8s ease both" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-              <img src={LOGO_URL} alt="MCST seal" style={{ width: 56, height: 56, objectFit: "contain", filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.5))" }} />
+              <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 56, height: 56, objectFit: "contain", filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.5))" }} />
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>{s.kicker}</div>
             </div>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.6rem, 6.5vw, 5rem)", fontWeight: 700, lineHeight: 1.06, color: WHITE, marginBottom: 30, letterSpacing: "-0.02em" }}>
@@ -118,8 +120,8 @@ export default function Home() {
             <Link to="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: BLUE, fontWeight: 700, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>Read our story →</Link>
           </div>
           <div style={{ position: "relative" }}>
-            <img src={`${BASE}/campus.jpg`} alt="The MCST campus" loading="lazy" decoding="async" style={{ width: "100%", display: "block", borderRadius: 2, boxShadow: "0 24px 60px rgba(0,0,0,0.16)", background: CREAM_DARK }} />
-            <img src={LOGO_URL} alt="MCST seal" style={{ position: "absolute", bottom: -24, left: -24, width: 104, height: 104, objectFit: "contain", filter: "drop-shadow(0 10px 26px rgba(10,22,40,0.35))" }} />
+            <img src={img("shared.campusPhoto", ABOUT_CAMPUS_PHOTO)} alt="The MCST campus" loading="lazy" decoding="async" style={{ width: "100%", display: "block", borderRadius: 2, boxShadow: "0 24px 60px rgba(0,0,0,0.16)", background: CREAM_DARK }} />
+            <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ position: "absolute", bottom: -24, left: -24, width: 104, height: 104, objectFit: "contain", filter: "drop-shadow(0 10px 26px rgba(10,22,40,0.35))" }} />
           </div>
         </div>
       </section>
@@ -158,7 +160,7 @@ export default function Home() {
                   onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 18px 40px rgba(10,22,40,0.12)"; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
                   <div style={{ aspectRatio: "16 / 10", overflow: "hidden", background: CREAM_DARK }}>
-                    <img src={n.img} alt={n.title} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <img src={img(`home.news.${i}`, n.img)} alt={n.title} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
                   <div style={{ padding: "22px 22px 26px" }}>
                     <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
@@ -188,7 +190,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "240px 240px", gap: 3 }} className="mosaic">
             {MOSAIC.map((g, i) => (
               <div key={i} style={{ gridArea: g.span, position: "relative", overflow: "hidden", background: "#dcdcd6" }}>
-                <img src={g.src} alt={g.label} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
+                <img src={img(`home.mosaic.${i}`, g.src)} alt={g.label} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
                   onMouseEnter={e => { (e.target as HTMLElement).style.transform = "scale(1.04)"; (e.target as HTMLElement).style.filter = "brightness(0.75)"; }}
                   onMouseLeave={e => { (e.target as HTMLElement).style.transform = "scale(1)"; (e.target as HTMLElement).style.filter = "brightness(1)"; }} />
                 <span style={{ position: "absolute", bottom: 10, left: 12, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.9)", letterSpacing: "0.05em", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{g.label}</span>
@@ -201,7 +203,7 @@ export default function Home() {
       {/* CTA */}
       <section style={{ padding: "96px 32px", background: BLUE_DEEP, textAlign: "center" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <img src={LOGO_URL} alt="MCST seal" style={{ width: 72, height: 72, objectFit: "contain", marginBottom: 24, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.4))" }} />
+          <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 72, height: 72, objectFit: "contain", marginBottom: 24, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.4))" }} />
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: WHITE, lineHeight: 1.15, marginBottom: 18 }}>Begin your journey with us</h2>
           <p style={{ fontFamily: "'Lora', serif", fontSize: 16, color: "rgba(255,255,255,0.6)", lineHeight: 1.8, marginBottom: 36 }}>
             Admissions for A.Y. 2026–2027 are now open. Reach out to our admissions office and take the first step.

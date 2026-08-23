@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { BASE, BLUE, CREAM, MUTED, WHITE, PROGRAMS, DEPT_FILTERS } from "../data";
+import { BLUE, CREAM, MUTED, WHITE, PROGRAMS, DEPT_FILTERS, PAGE_HERO } from "../data";
 import PageHero from "../components/PageHero";
 import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
+import { useImg } from "../lib/imageOverrides";
 
 export default function Programs() {
+  const img = useImg();
   const [filter, setFilter] = useState("All");
   const list = filter === "All" ? PROGRAMS : PROGRAMS.filter(p => p.dept === filter);
 
@@ -12,7 +14,7 @@ export default function Programs() {
     <>
       <PageHero eyebrow="Academics" title="Degree Programs"
         subtitle="Nine full degree programs across arts and sciences, computing, health, education, governance, and criminal justice."
-        img={`${BASE}/slides/image4.jpeg`} />
+        img={img("pageHero.programs", PAGE_HERO.programs)} />
 
       <section style={{ padding: "80px 32px 100px", background: CREAM }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>

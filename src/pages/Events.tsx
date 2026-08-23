@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { BASE, BLUE, BLUE_DEEP, CREAM, INK, MUTED, WHITE, EVENTS } from "../data";
+import { BLUE, BLUE_DEEP, CREAM, INK, MUTED, WHITE, EVENTS, PAGE_HERO } from "../data";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
+import { useImg } from "../lib/imageOverrides";
 
 export default function Events() {
+  const img = useImg();
   const [active, setActive] = useState(0);
 
   return (
     <>
       <PageHero eyebrow="Updates" title="Recent Events"
         subtitle="Illustrative event listings for this concept project — dates and details are for demonstration, not an official MCST calendar."
-        img={`${BASE}/RecentEvents/1.jpeg`} />
+        img={img("pageHero.events", PAGE_HERO.events)} />
 
       <section style={{ padding: "90px 32px 100px", background: CREAM }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -18,7 +20,7 @@ export default function Events() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 3, alignItems: "stretch", marginBottom: 72 }} className="events-layout">
             <div style={{ position: "relative", overflow: "hidden", background: BLUE_DEEP, minHeight: 440 }}>
               {EVENTS.map((ev, i) => (
-                <img key={i} src={ev.img} alt={ev.title} loading="lazy" decoding="async" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: active === i ? 0.5 : 0, transition: "opacity 0.5s" }} />
+                <img key={i} src={img(`event.${i}`, ev.img)} alt={ev.title} loading="lazy" decoding="async" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: active === i ? 0.5 : 0, transition: "opacity 0.5s" }} />
               ))}
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0.3) 60%)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "40px 36px" }}>
@@ -52,7 +54,7 @@ export default function Events() {
             {EVENTS.map((ev, i) => (
               <Reveal key={i} delay={(i % 2) * 90}>
                 <div className="events-card" style={{ display: "flex", gap: 20, background: WHITE, border: "1px solid rgba(10,22,40,0.07)", padding: 18, alignItems: "center", height: "100%" }}>
-                  <img src={ev.img} alt={ev.title} loading="lazy" decoding="async" className="events-card-img" style={{ width: 120, height: 96, objectFit: "cover", flexShrink: 0, borderRadius: 2, background: "#dcdcd6" }} />
+                  <img src={img(`event.${i}`, ev.img)} alt={ev.title} loading="lazy" decoding="async" className="events-card-img" style={{ width: 120, height: 96, objectFit: "cover", flexShrink: 0, borderRadius: 2, background: "#dcdcd6" }} />
                   <div>
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BLUE, marginBottom: 6 }}>{ev.tag} — {ev.date}, {ev.year}</div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 600, color: INK, lineHeight: 1.3, marginBottom: 6 }}>{ev.title}</h3>

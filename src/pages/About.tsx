@@ -1,7 +1,8 @@
 import { Link } from "react-router";
-import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE } from "../data";
+import { LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PAGE_HERO, ABOUT_CAMPUS_PHOTO } from "../data";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
+import { useImg } from "../lib/imageOverrides";
 
 const VALUES = [
   { t: "Academic Excellence",  d: "Rigorous, relevant programs that meet national standards and prepare graduates for the board and the workplace." },
@@ -11,11 +12,12 @@ const VALUES = [
 ];
 
 export default function About() {
+  const img = useImg();
   return (
     <>
       <PageHero eyebrow="About the College" title="Where Science Meets Purpose and Service"
         subtitle="Mandaluyong College of Science and Technology exists to serve the educational needs of Mandaluyong City through quality, accessible, and values-based education."
-        img={`${BASE}/background.jpeg`} />
+        img={img("pageHero.about", PAGE_HERO.about)} />
 
       {/* Story */}
       <section style={{ padding: "100px 32px", background: CREAM }}>
@@ -41,9 +43,9 @@ export default function About() {
           </div>
 
           <div style={{ position: "relative" }}>
-            <img src={`${BASE}/campus.jpg`} alt="The MCST campus" loading="lazy" decoding="async"
+            <img src={img("shared.campusPhoto", ABOUT_CAMPUS_PHOTO)} alt="The MCST campus" loading="lazy" decoding="async"
               style={{ width: "100%", display: "block", borderRadius: 2, boxShadow: "0 24px 60px rgba(0,0,0,0.16)", background: CREAM_DARK }} />
-            <img src={LOGO_URL} alt="MCST seal" style={{ position: "absolute", bottom: -24, left: -24, width: 104, height: 104, objectFit: "contain", filter: "drop-shadow(0 10px 26px rgba(10,22,40,0.35))" }} />
+            <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ position: "absolute", bottom: -24, left: -24, width: 104, height: 104, objectFit: "contain", filter: "drop-shadow(0 10px 26px rgba(10,22,40,0.35))" }} />
           </div>
         </div>
       </section>

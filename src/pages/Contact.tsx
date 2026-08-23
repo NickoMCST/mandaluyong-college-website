@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, WHITE, PROGRAMS } from "../data";
+import { useImg } from "../lib/imageOverrides";
 
 export default function Contact() {
+  const img = useImg();
   const [submitted, setSubmitted] = useState(false);
 
   return (
@@ -17,7 +19,7 @@ export default function Contact() {
           </p>
 
           <div style={{ display: "flex", gap: 18, alignItems: "flex-start", marginBottom: 32 }}>
-            <img src={LOGO_URL} alt="MCST seal" style={{ width: 68, height: 68, objectFit: "contain", flexShrink: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.4))" }} />
+            <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 68, height: 68, objectFit: "contain", flexShrink: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.4))" }} />
             <div>
               <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 16, color: WHITE, marginBottom: 4 }}>
                 Mandaluyong College of Science &amp; Technology
