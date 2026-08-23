@@ -3,11 +3,12 @@ import { Link, useOutletContext } from "react-router";
 import { BASE, LOGO_URL, BLUE, BLUE_DEEP, BLUE_MID, CREAM, CREAM_DARK, INK, MUTED, WHITE, PROGRAMS, MOSAIC, ANNOUNCE, HERO_SLIDES, QUICKLINKS, NEWS, PORTAL_TRIGGER, ABOUT_CAMPUS_PHOTO } from "../data";
 import ProgramCard from "../components/ProgramCard";
 import Reveal from "../components/Reveal";
-import { useImg } from "../lib/imageOverrides";
+import { useImg, useText } from "../lib/imageOverrides";
 
 export default function Home() {
   const { openPortalNotice } = useOutletContext<{ openPortalNotice: () => void }>();
   const img = useImg();
+  const text = useText();
   const [slide, setSlide] = useState(0);
   const total = HERO_SLIDES.length;
 
@@ -190,10 +191,10 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "240px 240px", gap: 3 }} className="mosaic">
             {MOSAIC.map((g, i) => (
               <div key={i} style={{ gridArea: g.span, position: "relative", overflow: "hidden", background: "#dcdcd6" }}>
-                <img src={img(`home.mosaic.${i}`, g.src)} alt={g.label} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
+                <img src={img(`home.mosaic.${i}`, g.src)} alt={text(`home.mosaic.${i}`, g.label)} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s, filter 0.4s" }}
                   onMouseEnter={e => { (e.target as HTMLElement).style.transform = "scale(1.04)"; (e.target as HTMLElement).style.filter = "brightness(0.75)"; }}
                   onMouseLeave={e => { (e.target as HTMLElement).style.transform = "scale(1)"; (e.target as HTMLElement).style.filter = "brightness(1)"; }} />
-                <span style={{ position: "absolute", bottom: 10, left: 12, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.9)", letterSpacing: "0.05em", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{g.label}</span>
+                <span style={{ position: "absolute", bottom: 10, left: 12, fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.9)", letterSpacing: "0.05em", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>{text(`home.mosaic.${i}`, g.label)}</span>
               </div>
             ))}
           </div>

@@ -25,7 +25,14 @@ const SESSION_TOKEN_KEY = "mcc-admin-gh-token";
 const LOCAL_REPO_KEY = "mcc-admin-gh-repo-config";
 const CONFIG_REPO_PATH = "public/image-config.json";
 
-type Slot = { key: string; label: string; group: string; default: string };
+// Caption/label overrides live in the same JSON file as image overrides,
+// under this suffixed key — see src/lib/imageOverrides.tsx.
+const LABEL_SUFFIX = "__label";
+
+// Slots whose caption/name is not shown anywhere on the site (page banners,
+// branding) don't get a label field — there's nothing on the page for the
+// text to change.
+type Slot = { key: string; label: string; group: string; default: string; editableLabel?: boolean };
 
 function useSlots(): Slot[] {
   return useMemo(() => {
@@ -37,10 +44,10 @@ function useSlots(): Slot[] {
         label: `Slide ${i + 1} — "${s.title} ${s.titleItalic}"`, default: s.img,
       })),
       ...MOSAIC.map((m, i) => ({
-        key: `home.mosaic.${i}`, group: "Homepage Mosaic", label: `Mosaic tile — ${m.label}`, default: m.src,
+        key: `home.mosaic.${i}`, group: "Homepage Mosaic", label: `Mosaic tile — ${m.label}`, default: m.src, editableLabel: true,
       })),
       ...NEWS.map((n, i) => ({
-        key: `home.news.${i}`, group: "Homepage News", label: `News — ${n.title}`, default: n.img,
+        key: `home.news.${i}`, group: "Homepage News", label: `News — ${n.title}`, default: n.img, editableLabel: true,
       })),
       { key: "pageHero.about", label: "About page banner", group: "Page Banners", default: PAGE_HERO.about },
       { key: "pageHero.programs", label: "Programs page banner", group: "Page Banners", default: PAGE_HERO.programs },
@@ -50,10 +57,10 @@ function useSlots(): Slot[] {
         key: `program.${p.code}`, group: "Program Logos", label: `${p.code} — ${p.title}`, default: p.img,
       })),
       ...EVENTS.map((e, i) => ({
-        key: `event.${i}`, group: "Events", label: `Event — ${e.title}`, default: e.img,
+        key: `event.${i}`, group: "Events", label: `Event — ${e.title}`, default: e.img, editableLabel: true,
       })),
       ...CAMPUS_GALLERY.map((g, i) => ({
-        key: `campus.gallery.${i}`, group: "Campus Life Gallery", label: `Gallery — ${g.label}`, default: g.src,
+        key: `campus.gallery.${i}`, group: "Campus Life Gallery", label: `Gallery — ${g.label}`, default: g.src, editableLabel: true,
       })),
     ];
     return slots;
@@ -134,6 +141,7 @@ function Dashboard() {
   const { images: published, loaded, reload } = useImageOverrides();
 
   const [draft, setDraft] = useState<Record<string, string>>({});
+  const [draftLabels, setDraftLabels] = useState<Record<string, string>>({});
   const [repoConfig, setRepoConfig] = useState<RepoConfig>(loadRepoConfig());
   const [token, setToken] = useState(() => sessionStorage.getItem(SESSION_TOKEN_KEY) || "");
   const [status, setStatus] = useState<{ kind: "idle" | "working" | "success" | "error"; message: string }>({ kind: "idle", message: "" });
@@ -160,11 +168,21 @@ function Dashboard() {
 
   const currentValue = (slot: Slot) => draft[slot.key] ?? published[slot.key] ?? slot.default;
   const isDirty = (slot: Slot) => slot.key in draft && draft[slot.key] !== (published[slot.key] || slot.default);
-  const dirtyCount = slots.filter(isDirty).length;
-
   const setDraftValue = (key: string, url: string) => setDraft(prev => ({ ...prev, [key]: url }));
   const resetSlot = (slot: Slot) => setDraft(prev => { const n = { ...prev }; delete n[slot.key]; return n; });
-  const resetAllDraft = () => setDraft({});
+
+  // Caption/name editing — mirrors the image draft/publish flow above, but
+  // stores under `${key}__label` and only applies to slots with a caption
+  // actually rendered somewhere on the site (editableLabel: true).
+  const publishedLabel = (slot: Slot) => published[`${slot.key}${LABEL_SUFFIX}`] || slot.label;
+  const currentLabelValue = (slot: Slot) => draftLabels[slot.key] ?? publishedLabel(slot);
+  const isLabelDirty = (slot: Slot) => slot.key in draftLabels && draftLabels[slot.key] !== publishedLabel(slot);
+  const setDraftLabel = (key: string, value: string) => setDraftLabels(prev => ({ ...prev, [key]: value }));
+  const resetLabel = (slot: Slot) => setDraftLabels(prev => { const n = { ...prev }; delete n[slot.key]; return n; });
+
+  const dirtyCount = slots.filter(s => isDirty(s) || isLabelDirty(s)).length;
+
+  const resetAllDraft = () => { setDraft({}); setDraftLabels({}); };
 
   const handleFile = (slot: Slot, file: File) => {
     const reader = new FileReader();
@@ -237,6 +255,16 @@ function Dashboard() {
         }
       }
 
+      // Resolve every dirty caption/label the same way — plain text, no
+      // upload step needed.
+      for (const slot of slots) {
+        if (!(slot.key in draftLabels)) continue;
+        const value = draftLabels[slot.key].trim();
+        const labelKey = `${slot.key}${LABEL_SUFFIX}`;
+        if (value === "" || value === slot.label) { delete finalMap[labelKey]; continue; }
+        finalMap[labelKey] = value;
+      }
+
       setStatus({ kind: "working", message: "Saving image-config.json…" });
       let sha: string | undefined;
       try {
@@ -257,7 +285,7 @@ function Dashboard() {
         }),
       });
 
-      setDraft({});
+      resetAllDraft();
       setStatus({
         kind: "success",
         message: `Published! GitHub Actions is rebuilding the site now — changes will be live for everyone in about 1-3 minutes.`,
@@ -342,28 +370,40 @@ function Dashboard() {
                   {groupSlots.map(slot => {
                     const value = currentValue(slot);
                     const dirty = isDirty(slot);
+                    const labelDirty = isLabelDirty(slot);
                     return (
-                      <div key={slot.key} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 14, alignItems: "center", background: WHITE, border: `1px solid ${dirty ? BLUE : "rgba(10,22,40,0.08)"}`, borderRadius: 6, padding: 12 }}>
+                      <div key={slot.key} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 14, alignItems: "start", background: WHITE, border: `1px solid ${dirty || labelDirty ? BLUE : "rgba(10,22,40,0.08)"}`, borderRadius: 6, padding: 12 }}>
                         <img src={value} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 4, background: CREAM_DARK }}
                           onError={e => { (e.target as HTMLImageElement).style.opacity = "0.25"; }} />
                         <div>
                           <div style={{ fontSize: 12.5, fontWeight: 600, color: INK, marginBottom: 6 }}>
-                            {slot.label} {dirty && <span style={{ color: BLUE, fontWeight: 700 }}>· unpublished</span>}
+                            {slot.label} {(dirty || labelDirty) && <span style={{ color: BLUE, fontWeight: 700 }}>· unpublished</span>}
                           </div>
                           <input
                             value={value.startsWith("data:") ? "(newly uploaded file)" : value}
                             onChange={e => setDraftValue(slot.key, e.target.value)}
                             readOnly={value.startsWith("data:")}
                             placeholder="Paste an image URL"
-                            style={{ width: "100%", padding: "8px 10px", fontSize: 12, border: "1px solid rgba(10,22,40,0.15)", borderRadius: 4, boxSizing: "border-box" }}
+                            style={{ width: "100%", padding: "8px 10px", fontSize: 12, border: "1px solid rgba(10,22,40,0.15)", borderRadius: 4, boxSizing: "border-box", marginBottom: slot.editableLabel ? 6 : 0 }}
                           />
+                          {slot.editableLabel && (
+                            <>
+                              <div style={{ fontSize: 10.5, color: MUTED, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>Caption / name shown on site</div>
+                              <input
+                                value={currentLabelValue(slot)}
+                                onChange={e => setDraftLabel(slot.key, e.target.value)}
+                                placeholder="Caption shown on the site"
+                                style={{ width: "100%", padding: "8px 10px", fontSize: 12, border: `1px solid ${labelDirty ? BLUE : "rgba(10,22,40,0.15)"}`, borderRadius: 4, boxSizing: "border-box" }}
+                              />
+                            </>
+                          )}
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                           <input type="file" accept="image/*" ref={el => { fileInputs.current[slot.key] = el; }}
                             style={{ display: "none" }}
                             onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(slot, f); }} />
                           <button onClick={() => fileInputs.current[slot.key]?.click()} style={smallBtn}>Upload</button>
-                          <button onClick={() => resetSlot(slot)} disabled={!dirty} style={{ ...smallBtn, opacity: dirty ? 1 : 0.4, cursor: dirty ? "pointer" : "default" }}>Undo</button>
+                          <button onClick={() => { resetSlot(slot); resetLabel(slot); }} disabled={!dirty && !labelDirty} style={{ ...smallBtn, opacity: (dirty || labelDirty) ? 1 : 0.4, cursor: (dirty || labelDirty) ? "pointer" : "default" }}>Undo</button>
                         </div>
                       </div>
                     );
@@ -378,7 +418,7 @@ function Dashboard() {
       {/* Publish bar */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: WHITE, borderTop: "1px solid rgba(10,22,40,0.1)", padding: "14px 24px", display: "flex", justifyContent: "center", gap: 12, boxShadow: "0 -10px 30px rgba(0,0,0,0.06)" }}>
         <div style={{ maxWidth: 980, width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: 12.5, color: MUTED }}>{dirtyCount === 0 ? "No unpublished changes" : `${dirtyCount} photo${dirtyCount > 1 ? "s" : ""} ready to publish`}</span>
+          <span style={{ fontSize: 12.5, color: MUTED }}>{dirtyCount === 0 ? "No unpublished changes" : `${dirtyCount} change${dirtyCount > 1 ? "s" : ""} ready to publish`}</span>
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={resetAllDraft} disabled={dirtyCount === 0} style={{ ...smallBtn, padding: "10px 16px", opacity: dirtyCount === 0 ? 0.4 : 1 }}>Discard all</button>
             <button onClick={publish} disabled={dirtyCount === 0 || status.kind === "working"}
