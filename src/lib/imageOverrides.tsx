@@ -1,13 +1,20 @@
 import { createContext, useContext, useCallback, useEffect, useState, type ReactNode } from "react";
 
-// The live site resolves every editable photo through this file. It is a
-// plain static JSON file shipped inside public/ (so it exists at
-// `${BASE_URL}image-config.json` for every visitor, not just the admin's own
-// browser). The admin dashboard (see src/pages/Admin.tsx) edits this file by
-// committing directly to the GitHub repo, which triggers the site's existing
-// GitHub Actions build/deploy — so a "Publish" from the dashboard becomes
-// visible to everyone once that deploy finishes (usually 1-3 minutes).
+// The live site resolves every editable photo (and, now, every editable
+// caption) through this file. It is a plain static JSON file shipped inside
+// public/ (so it exists at `${BASE_URL}image-config.json` for every visitor,
+// not just the admin's own browser). The admin dashboard (see
+// src/pages/Admin.tsx) edits this file by committing directly to the GitHub
+// repo, which triggers the site's existing GitHub Actions build/deploy — so
+// a "Publish" from the dashboard becomes visible to everyone once that
+// deploy finishes (usually 1-3 minutes).
 const CONFIG_PATH = "image-config.json";
+
+// Caption/label overrides share the same flat JSON file as image overrides.
+// They're stored under a suffixed key so a caption never collides with an
+// image URL for the same slot, e.g. "home.mosaic.0" (image) vs
+// "home.mosaic.0__label" (caption).
+const LABEL_SUFFIX = "__label";
 
 type ImageMap = Record<string, string>;
 
@@ -15,6 +22,8 @@ type Ctx = {
   images: ImageMap;
   loaded: boolean;
   img: (key: string, fallback: string) => string;
+  /** Resolve a slot's current caption/name, falling back to its default. */
+  text: (key: string, fallback: string) => string;
   reload: () => void;
 };
 
@@ -47,10 +56,11 @@ export function ImageOverridesProvider({ children }: { children: ReactNode }) {
   }, [nonce]);
 
   const img = useCallback((key: string, fallback: string) => images[key] || fallback, [images]);
+  const text = useCallback((key: string, fallback: string) => images[`${key}${LABEL_SUFFIX}`] || fallback, [images]);
   const reload = useCallback(() => setNonce(n => n + 1), []);
 
   return (
-    <ImageOverridesContext.Provider value={{ images, loaded, img, reload }}>
+    <ImageOverridesContext.Provider value={{ images, loaded, img, text, reload }}>
       {children}
     </ImageOverridesContext.Provider>
   );
@@ -61,6 +71,13 @@ export function useImg() {
   const ctx = useContext(ImageOverridesContext);
   if (!ctx) throw new Error("useImg must be used within an ImageOverridesProvider");
   return ctx.img;
+}
+
+/** Use inside any public page/component to resolve a slot's current caption/name. */
+export function useText() {
+  const ctx = useContext(ImageOverridesContext);
+  if (!ctx) throw new Error("useText must be used within an ImageOverridesProvider");
+  return ctx.text;
 }
 
 /** Full context access (used by the admin dashboard to show current published state). */
