@@ -10,10 +10,10 @@ const stats = [
 ];
 
 const quickActions = [
-  { name: 'View Grades', href: '/academics', icon: TrendingUp },
-  { name: 'Request Document', href: '/documents', icon: FileText },
-  { name: 'Announcements', href: '/announcements', icon: Bell },
-  { name: 'Enrollment', href: '/enrollment', icon: BookOpen },
+  { name: 'View Grades', href: '/portal/academics', icon: TrendingUp },
+  { name: 'Request Document', href: '/portal/documents', icon: FileText },
+  { name: 'Announcements', href: '/portal/announcements', icon: Bell },
+  { name: 'Enrollment', href: '/portal/enrollment', icon: BookOpen },
 ];
 
 const announcements = [
@@ -129,7 +129,7 @@ export default function Dashboard() {
               <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Recent Announcements
               </h2>
-              <Link to="/announcements" className="text-[11px] text-primary hover:underline flex items-center gap-0.5">
+              <Link to="/portal/announcements" className="text-[11px] text-primary hover:underline flex items-center gap-0.5">
                 View all
               </Link>
             </div>
