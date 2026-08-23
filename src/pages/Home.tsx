@@ -19,6 +19,14 @@ export default function Home() {
 
   const s = HERO_SLIDES[slide];
 
+  const [notice, setNotice] = useState(0);
+  const noticeTotal = ANNOUNCE.length;
+
+  useEffect(() => {
+    const t = setInterval(() => setNotice(n => (n + 1) % noticeTotal), 5200);
+    return () => clearInterval(t);
+  }, [noticeTotal]);
+
   return (
     <>
       {/* HERO CAROUSEL */}
@@ -67,14 +75,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ANNOUNCEMENT MARQUEE */}
-      <div style={{ background: BLUE, overflow: "hidden", whiteSpace: "nowrap", padding: "11px 0" }}>
-        <div className="marquee-track" style={{ display: "inline-flex", animation: "marquee 28s linear infinite" }}>
-          {[...ANNOUNCE, ...ANNOUNCE].map((a, i) => (
-            <span key={i} style={{ display: "inline-flex", alignItems: "center", color: "rgba(255,255,255,0.92)", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              <span style={{ padding: "0 26px" }}>{a}</span><span style={{ opacity: 0.5 }}>◆</span>
+      {/* NOTICE BAR — a single rotating item with a fixed label and manual
+          controls, instead of an auto-scrolling marquee. */}
+      <div style={{ background: BLUE_DEEP, borderBottom: `1px solid rgba(255,255,255,0.08)` }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px", display: "flex", alignItems: "center", gap: 18, height: 46 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: BLUE_MID }} />
+            <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Notice</span>
+          </div>
+          <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.14)", flexShrink: 0 }} />
+          <div style={{ flex: 1, position: "relative", height: 18, overflow: "hidden" }}>
+            {ANNOUNCE.map((a, i) => (
+              <span key={i} style={{
+                position: "absolute", inset: 0, display: "flex", alignItems: "center",
+                fontSize: 13, color: "rgba(255,255,255,0.88)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                opacity: i === notice ? 1 : 0,
+                transform: i === notice ? "translateY(0)" : "translateY(6px)",
+                transition: "opacity 0.5s ease, transform 0.5s ease",
+                pointerEvents: i === notice ? "auto" : "none",
+              }}>
+                {a}
+              </span>
+            ))}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontVariantNumeric: "tabular-nums" }}>
+              {String(notice + 1).padStart(2, "0")} / {String(noticeTotal).padStart(2, "0")}
             </span>
-          ))}
+            <div style={{ display: "flex", gap: 4 }}>
+              <button aria-label="Previous notice" onClick={() => setNotice(n => (n - 1 + noticeTotal) % noticeTotal)}
+                style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 3, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 11 }}>
+                ‹
+              </button>
+              <button aria-label="Next notice" onClick={() => setNotice(n => (n + 1) % noticeTotal)}
+                style={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 3, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 11 }}>
+                ›
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
