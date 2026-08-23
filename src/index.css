@@ -126,6 +126,14 @@ textarea:focus-visible, select:focus-visible {
 .prog-list > div:nth-child(odd) { padding-right: 28px; }
 .prog-list > div:nth-child(even) { padding-left: 28px; border-left: 1px solid rgba(10,22,40,0.14); }
 
+/* Featured Programs preview grid (home page) */
+@media (max-width: 900px) {
+  .prog-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 600px) {
+  .prog-grid { grid-template-columns: 1fr !important; }
+}
+
 @media (max-width: 960px) {
   .desk-nav { display: none !important; }
   .mob-btn { display: block !important; }
