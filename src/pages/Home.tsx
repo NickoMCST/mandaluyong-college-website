@@ -154,7 +154,7 @@ export default function Home() {
             </div>
             <Link to="/events" style={{ color: BLUE, fontWeight: 700, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none" }}>All updates →</Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="prog-grid">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="prog-grid news-scroll">
             {NEWS.map((n, i) => (
               <Reveal key={i} delay={(i % 3) * 80}>
                 <Link to="/events" style={{ textDecoration: "none", display: "block", background: WHITE, borderRadius: 3, overflow: "hidden", border: "1px solid rgba(10,22,40,0.07)", transition: "transform 0.2s, box-shadow 0.2s" }}
