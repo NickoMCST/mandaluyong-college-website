@@ -115,7 +115,7 @@ export default function Dashboard() {
               <span className="w-2 h-2 rounded-full" style={{ background: '#5aad6a' }} />
               Enrolled
             </span>
-            <span style={{ fontSize: 11, color: '#000000' }}>2nd Semester, A.Y. 2025–2026</span>
+            <span style={{ fontSize: 11, color: '#c8d8f0' }}>2nd Semester, A.Y. 2025–2026</span>
           </div>
         </div>
 
