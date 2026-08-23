@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { NAV, MENU, UTILITY, LOGO_URL, MUSIC_URL, BLUE, BLUE_DARK, BLUE_DEEP, BLUE_MID, CREAM, INK, WHITE, PORTAL_TRIGGER } from "../data";
 import MusicPlayer from "../components/MusicPlayer";
+import { useImg } from "../lib/imageOverrides";
 
 export default function Root() {
+  const img = useImg();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMega, setOpenMega] = useState<string | null>(null);
@@ -82,7 +84,7 @@ export default function Root() {
         {/* Main bar */}
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 66 }}>
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <img src={LOGO_URL} alt="MCST seal" style={{ width: 46, height: 46, objectFit: "contain", flexShrink: 0 }} />
+            <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 46, height: 46, objectFit: "contain", flexShrink: 0 }} />
             <div style={{ borderLeft: "1px solid rgba(255,255,255,0.2)", paddingLeft: 12 }}>
               <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 14, color: WHITE, letterSpacing: "0.04em", lineHeight: 1.1 }}>Mandaluyong College</div>
               <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)", letterSpacing: "0.18em", textTransform: "uppercase", marginTop: 2 }}>of Science &amp; Technology</div>
@@ -311,6 +313,7 @@ function SearchIcon() {
 }
 
 function Footer({ onPortalClick }: { onPortalClick: () => void }) {
+  const img = useImg();
   const cols = [
     { title: "Academics", links: [["Programs", "/programs"], ["Colleges", "/programs"], ["Program Finder", "/programs"]] },
     { title: "Admissions", links: [["Apply Now", "/contact"], ["Scholarships", "/contact"], ["Requirements", "/contact"]] },
@@ -324,7 +327,7 @@ function Footer({ onPortalClick }: { onPortalClick: () => void }) {
         <div style={{ display: "grid", gridTemplateColumns: "1.6fr repeat(4, 1fr)", gap: 40, marginBottom: 48 }} className="footer-grid">
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-              <img src={LOGO_URL} alt="MCST seal" style={{ width: 46, height: 46, objectFit: "contain" }} />
+              <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 46, height: 46, objectFit: "contain" }} />
               <div>
                 <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 14, fontWeight: 700, color: WHITE, lineHeight: 1.1 }}>Mandaluyong College</div>
                 <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>of Science &amp; Technology</div>
