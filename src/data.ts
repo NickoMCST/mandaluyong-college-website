@@ -41,7 +41,7 @@ export const PROGRAMS = [
   { code: "BACOM",  title: "Bachelor of Arts in Communication", short: "Communication",       dept: "College of Arts & Sciences",  img: `${BASE}/program_logo/bacom.jpg`,
     desc: "Develops skilled communicators across media, journalism, public relations, and organizational contexts.", year: "4-Year Program", featured: false },
   { code: "BSIS",   title: "BS Information Systems",            short: "Information Systems", dept: "College of Computing",        img: `${BASE}/program_logo/bsis.png`,
-    desc: "Bridges technology and organizational decision-making. Students learn systems analysis, database management, and enterprise software — preparing them for roles in IT management and consulting.", year: "4-Year Program", featured: true },
+    desc: "Bridges technology and organizational decision-making. Students learn systems analysis, database management, and enterprise software, preparing them for roles in IT management and consulting.", year: "4-Year Program", featured: true },
   { code: "BSMATH", title: "BS Mathematics",                   short: "Mathematics",         dept: "College of Arts & Sciences",  img: `${BASE}/program_logo/bsmath.jpg`,
     desc: "Trains analytical thinkers in pure and applied mathematics for careers in research, finance, and data science.", year: "4-Year Program", featured: false },
   { code: "BSN",    title: "BS Nursing",                       short: "Nursing",             dept: "College of Health Sciences",   img: `${BASE}/program_logo/bsn.jpg`,
