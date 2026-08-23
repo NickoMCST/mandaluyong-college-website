@@ -14,6 +14,7 @@ import Enrollment from "./portal/pages/Enrollment";
 import Documents from "./portal/pages/Documents";
 import Announcements from "./portal/pages/Announcements";
 import Settings from "./portal/pages/Settings";
+import Admin from "./pages/Admin";
 
 export const router = createBrowserRouter(
   [
@@ -30,6 +31,7 @@ export const router = createBrowserRouter(
         { path: "*", Component: NotFound },
       ],
     },
+    { path: "/admin", Component: Admin },
     {
       path: "/portal",
       Component: PortalLayout,

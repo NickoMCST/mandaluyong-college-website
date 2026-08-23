@@ -49,6 +49,30 @@ export const PROGRAMS = [
   { code: "SNE",    title: "Special Needs Education",          dept: "College of Education",        img: `${BASE}/bsne.jpeg` },
 ];
 
+// Shared "campus photo" used on both Home (about preview) and About page
+export const ABOUT_CAMPUS_PHOTO = `${BASE}/campus.jpg`;
+
+// Hero banner image behind the title on each interior page
+export const PAGE_HERO = {
+  about: `${BASE}/background.jpeg`,
+  programs: `${BASE}/slides/image4.jpeg`,
+  campus: `${BASE}/slides/image6.jpg`,
+  events: `${BASE}/RecentEvents/1.jpeg`,
+};
+
+// Photo grid on the Campus Life page — each image is matched to its caption
+export const CAMPUS_GALLERY = [
+  { src: `${BASE}/slides/mcst-drone.png`, label: "The Campus" },
+  { src: `${BASE}/slides/image4.jpeg`,    label: "Academic Life" },
+  { src: `${BASE}/slides/image6.jpg`,     label: "Student Activities" },
+  { src: `${BASE}/slides/image7.jpg`,     label: "Ceremonies" },
+  { src: `${BASE}/slides/image11.jpeg`,   label: "Gatherings" },
+  { src: `${BASE}/slides/image12.jpeg`,   label: "Fellowship" },
+  { src: `${BASE}/slides/image10.jpeg`,   label: "Community" },
+  { src: `${BASE}/slides/image13.jpeg`,   label: "Organizations" },
+  { src: `${BASE}/slides/image5.webp`,    label: "Campus Grounds" },
+];
+
 export const DEPT_FILTERS = [
   { short: "All",             full: "All" },
   { short: "Arts & Sciences", full: "College of Arts & Sciences" },
