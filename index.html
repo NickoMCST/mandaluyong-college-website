@@ -5,12 +5,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a1628" />
-    <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Security Headers -->
+    <!--
+      Security headers: only Content-Security-Policy actually works when
+      delivered via a <meta> tag — browsers ignore X-Frame-Options and
+      X-Content-Type-Options unless they come from a real HTTP response
+      header, which GitHub Pages doesn't let you set. (Those two tags were
+      previously here but did nothing — removed rather than leave a false
+      sense of protection.) If real clickjacking/MIME-sniffing protection
+      is needed later, put a CDN like Cloudflare in front of the site, or
+      move hosting to a platform that supports custom headers (e.g.
+      Netlify's _headers file, Vercel's vercel.json).
+    -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+
+    <!--
+      Robots directives are NOT hardcoded here — they're driven by
+      .config/site-meta.json (robots.index) via the siteMetaPlugin in
+      vite.config.ts, so there's one source of truth instead of two files
+      disagreeing about whether the site should be indexed.
+    -->
     
     <link rel="icon" type="image/png" href="%BASE_URL%favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
