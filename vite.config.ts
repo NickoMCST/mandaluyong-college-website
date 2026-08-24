@@ -2,6 +2,7 @@ import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
+import JavaScriptObfuscator from 'javascript-obfuscator'
 
 import siteMeta from './.config/site-meta.json'
 
@@ -31,6 +32,11 @@ export default defineConfig(({ mode }) => {
       devErrorOverlayReplay(),
       reactRefreshBoundaryFallback(),
       componentPreviewKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
+      // Scrambles the shipped JS (renamed variables, encoded strings, flattened
+      // control flow) so that anyone who saves the page or views the compiled
+      // bundle sees unreadable code instead of clean, reusable source. Only
+      // runs on production builds — dev mode stays fast and readable.
+      obfuscatorPlugin(),
     ],
     resolve: {
       alias: {
@@ -299,6 +305,59 @@ function reactRefreshBoundaryFallback(): Plugin {
       }
 
       return null
+    },
+  }
+}
+
+/**
+ * Obfuscates every emitted JS chunk at the end of a production build.
+ * This runs after minification, in the `writeBundle` hook, so it rewrites
+ * the actual files that ship to the browser — variable/function names
+ * become meaningless identifiers (`_0x4a2f`), string literals are moved
+ * into a decoded lookup array, and control flow is flattened. Someone
+ * who saves the page, opens DevTools, or downloads the bundle sees
+ * scrambled code rather than readable source.
+ *
+ * Dev builds (`vite dev`) are untouched — `apply: 'build'` skips this
+ * entirely outside `vite build`, so local debugging stays fast and
+ * source maps stay meaningful.
+ */
+function obfuscatorPlugin(): Plugin {
+  return {
+    name: 'js-obfuscator',
+    apply: 'build',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      for (const fileName of Object.keys(bundle)) {
+        if (!fileName.endsWith('.js')) continue
+
+        const chunk = bundle[fileName]
+        if (chunk.type !== 'chunk') continue
+
+        const result = JavaScriptObfuscator.obfuscate(chunk.code, {
+          compact: true,
+          controlFlowFlattening: true,
+          controlFlowFlatteningThreshold: 0.75,
+          deadCodeInjection: true,
+          deadCodeInjectionThreshold: 0.4,
+          debugProtection: false,
+          disableConsoleOutput: false,
+          identifierNamesGenerator: 'hexadecimal',
+          numbersToExpressions: true,
+          renameGlobals: false,
+          selfDefending: true,
+          simplify: true,
+          splitStrings: true,
+          splitStringsChunkLength: 8,
+          stringArray: true,
+          stringArrayEncoding: ['base64'],
+          stringArrayThreshold: 0.85,
+          transformObjectKeys: true,
+          unicodeEscapeSequence: false,
+        })
+
+        chunk.code = result.getObfuscatedCode()
+      }
     },
   }
 }
