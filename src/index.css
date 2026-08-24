@@ -129,9 +129,18 @@ textarea:focus-visible, select:focus-visible {
 /* Featured Programs preview grid (home page) */
 @media (max-width: 900px) {
   .prog-grid { grid-template-columns: 1fr 1fr !important; }
+  .glance-grid { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width: 600px) {
   .prog-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Home: institutional pillars + at-a-glance figures */
+@media (max-width: 820px) {
+  .pillars-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+}
+@media (max-width: 560px) {
+  .glance-grid { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 960px) {

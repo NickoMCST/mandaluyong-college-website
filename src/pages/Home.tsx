@@ -32,13 +32,17 @@ export default function Home() {
 
         <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "0 32px 84px", width: "100%" }}>
           <div key={slide} style={{ maxWidth: 830, animation: "fadeUp 0.8s ease both" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
               <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 56, height: 56, objectFit: "contain", filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.5))" }} />
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>{s.kicker}</div>
+              <div style={{ width: 1, height: 34, background: "rgba(255,255,255,0.18)" }} />
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.72)" }}>{s.kicker}</div>
+                <div style={{ fontSize: 10.5, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.42)", marginTop: 5 }}>Mandaluyong City &middot; Philippines</div>
+              </div>
             </div>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.6rem, 6.5vw, 5rem)", fontWeight: 700, lineHeight: 1.06, color: WHITE, marginBottom: 30, letterSpacing: "-0.02em" }}>
               <span style={{ display: "block", marginBottom: 6 }}>{s.title}</span>
-              <span style={{ display: "block", fontWeight: 400, fontStyle: "italic", color: "rgba(255,255,255,0.55)" }}>{s.titleItalic}</span>
+              <span style={{ display: "block", fontWeight: 400, fontStyle: "italic", color: "rgba(255,255,255,0.72)" }}>{s.titleItalic}</span>
             </h1>
             <p style={{ fontFamily: "'Lora', serif", fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.8, color: "rgba(255,255,255,0.68)", marginBottom: 40, maxWidth: 560 }}>{s.body}</p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
@@ -137,6 +141,31 @@ export default function Home() {
             <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ position: "absolute", bottom: -24, left: -24, width: 104, height: 104, objectFit: "contain", filter: "drop-shadow(0 10px 26px rgba(10,22,40,0.35))" }} />
           </div>
         </div>
+
+        <div style={{ maxWidth: 1280, margin: "72px auto 0", borderTop: "1px solid rgba(10,22,40,0.1)", paddingTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40 }} className="pillars-grid">
+          {PILLARS.map((pl, i) => (
+            <Reveal key={pl.title} delay={i * 90}>
+              <div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 13, fontWeight: 700, color: BLUE, marginBottom: 14, fontVariantNumeric: "tabular-nums" }}>{String(i + 1).padStart(2, "0")}</div>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: INK, marginBottom: 10, lineHeight: 1.25 }}>{pl.title}</h3>
+                <p style={{ fontFamily: "'Lora', serif", fontSize: 14.5, lineHeight: 1.75, color: "#4b5563" }}>{pl.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* AT A GLANCE */}
+      <section style={{ background: BLUE_DEEP, padding: "62px 32px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "rgba(255,255,255,0.08)" }} className="glance-grid">
+          {STATS.map((st) => (
+            <div key={st.label} style={{ background: BLUE_DEEP, padding: "8px 26px" }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3.4vw, 2.8rem)", fontWeight: 700, color: WHITE, lineHeight: 1.05, marginBottom: 10 }}>{st.value}</div>
+              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: BLUE_MID, marginBottom: 6 }}>{st.label}</div>
+              <div style={{ fontFamily: "'Lora', serif", fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,0.55)" }}>{st.note}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* PROGRAMS PREVIEW */}
@@ -229,6 +258,19 @@ export default function Home() {
     </>
   );
 }
+
+const PILLARS = [
+  { title: "Academic Rigor", body: "Degree programs held to demanding standards, taught by faculty who balance theory with the realities of professional practice." },
+  { title: "Community Relevance", body: "Learning that reaches beyond the classroom — health drives, literacy work, and service rooted in the city we call home." },
+  { title: "Principled Service", body: "We form graduates who lead with integrity and carry their education into the public good, wherever their careers take them." },
+];
+
+const STATS = [
+  { value: "9", label: "Degree Programs", note: "Across the arts, sciences, and professions" },
+  { value: "6", label: "Academic Colleges", note: "From Computing to Criminal Justice" },
+  { value: "4 Yrs", label: "Program Length", note: "Full baccalaureate degree tracks" },
+  { value: "Open", label: "Admissions", note: "Now enrolling for A.Y. 2026–2027" },
+];
 
 const btnPrimary: React.CSSProperties = {
   padding: "13px 28px", background: BLUE, color: WHITE, fontWeight: 700, fontSize: 12,
