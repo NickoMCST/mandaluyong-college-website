@@ -44,7 +44,7 @@ export default function Home() {
               <span style={{ display: "block", marginBottom: 6 }}>{s.title}</span>
               <span style={{ display: "block", fontWeight: 400, fontStyle: "italic", color: "rgba(255,255,255,0.72)" }}>{s.titleItalic}</span>
             </h1>
-            <p style={{ fontFamily: "'Lora', serif", fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.8, color: "rgba(255,255,255,0.68)", marginBottom: 40, maxWidth: 560 }}>{s.body}</p>
+            <p style={{ fontFamily: "'Lora', serif", fontSize: "clamp(1rem, 1.8vw, 1.15rem)", lineHeight: 1.7, color: "rgba(255,255,255,0.74)", marginBottom: 40, maxWidth: 560 }}>{s.body}</p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <Link to={s.ctaTo} style={btnPrimary}
                 onMouseEnter={e => { e.currentTarget.style.background = BLUE_MID; e.currentTarget.style.transform = "translateY(-2px)"; }}
@@ -142,13 +142,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div style={{ maxWidth: 1280, margin: "72px auto 0", borderTop: "1px solid rgba(10,22,40,0.1)", paddingTop: 48, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40 }} className="pillars-grid">
+        <div style={{ maxWidth: 1280, margin: "80px auto 0", borderTop: "1px solid rgba(10,22,40,0.1)", paddingTop: 52, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 48 }} className="pillars-grid">
           {PILLARS.map((pl, i) => (
             <Reveal key={pl.title} delay={i * 90}>
               <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 13, fontWeight: 700, color: BLUE, marginBottom: 14, fontVariantNumeric: "tabular-nums" }}>{String(i + 1).padStart(2, "0")}</div>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: INK, marginBottom: 10, lineHeight: 1.25 }}>{pl.title}</h3>
-                <p style={{ fontFamily: "'Lora', serif", fontSize: 14.5, lineHeight: 1.75, color: "#4b5563" }}>{pl.body}</p>
+                <div style={{ width: 32, height: 3, background: BLUE, marginBottom: 20, borderRadius: 2 }} />
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 21, fontWeight: 600, color: INK, marginBottom: 12, lineHeight: 1.25 }}>{pl.title}</h3>
+                <p style={{ fontFamily: "'Lora', serif", fontSize: 14.5, lineHeight: 1.78, color: "#4b5563" }}>{pl.body}</p>
               </div>
             </Reveal>
           ))}
@@ -273,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "96px 32px", background: BLUE_DEEP, textAlign: "center" }}>
+      <section style={{ padding: "104px 32px", background: BLUE_DEEP, textAlign: "center" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <img src={img("branding.logo", LOGO_URL)} alt="MCST seal" style={{ width: 72, height: 72, objectFit: "contain", marginBottom: 24, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.4))" }} />
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: WHITE, lineHeight: 1.15, marginBottom: 18 }}>Begin your journey with us</h2>
