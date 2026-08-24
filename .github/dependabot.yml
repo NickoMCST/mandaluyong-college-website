@@ -1,0 +1,25 @@
+version: 2
+updates:
+  # Keep npm packages current and get PRs when a dependency has a known
+  # vulnerability (this also powers GitHub's Dependabot security alerts).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      # Batch routine version bumps into one PR instead of one-per-package,
+      # so they're easy to review. Security-related updates still get their
+      # own separate, immediate PR regardless of this grouping.
+      dependencies:
+        patterns:
+          - "*"
+
+  # Keep GitHub Actions pinned-SHA versions current. Since deploy.yml now
+  # pins actions to commit SHAs (not floating tags), Dependabot is what
+  # notices upstream releases and opens a PR to bump the pinned SHA —
+  # without it, pinned actions would quietly go stale forever.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
