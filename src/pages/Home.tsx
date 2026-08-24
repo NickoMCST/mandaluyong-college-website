@@ -156,22 +156,52 @@ export default function Home() {
       </section>
 
       {/* AT A GLANCE */}
-      <section style={{ background: BLUE_DEEP, padding: "62px 32px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "rgba(255,255,255,0.08)" }} className="glance-grid">
-          {STATS.map((st) => (
-            <div key={st.label} style={{ background: BLUE_DEEP, padding: "8px 26px" }}>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3.4vw, 2.8rem)", fontWeight: 700, color: WHITE, lineHeight: 1.05, marginBottom: 10 }}>{st.value}</div>
-              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: BLUE_MID, marginBottom: 6 }}>{st.label}</div>
-              <div style={{ fontFamily: "'Lora', serif", fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,0.55)" }}>{st.note}</div>
+      <section style={{ background: BLUE_DEEP, padding: "76px 32px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 44 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE_MID }}>The College at a Glance</span>
+            <span style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.12)" }} />
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 40 }} className="glance-grid">
+            {STATS.map((st, i) => (
+              <Reveal key={st.label} delay={i * 80}>
+                <div style={{ paddingLeft: 22, borderLeft: "2px solid rgba(25,118,210,0.5)" }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.4rem, 4vw, 3.4rem)", fontWeight: 700, color: WHITE, lineHeight: 1, marginBottom: 14 }}>{st.value}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: BLUE_MID, marginBottom: 8 }}>{st.label}</div>
+                  <div style={{ fontFamily: "'Lora', serif", fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,0.55)" }}>{st.note}</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INSTITUTIONAL STATEMENT */}
+      <section style={{ background: CREAM, padding: "104px 32px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <Reveal>
+            <div>
+              <img src={img("branding.logo", LOGO_URL)} alt="" aria-hidden style={{ width: 46, height: 46, objectFit: "contain", opacity: 0.85, marginBottom: 30 }} />
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 30 }}>Our Commitment</p>
+              <blockquote style={{ margin: 0 }}>
+                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.4vw, 2.5rem)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.4, color: INK, letterSpacing: "-0.01em", textWrap: "balance" }}>
+                  &ldquo;An education is not measured by what a student knows, but by what a graduate gives back. We form professionals of competence and conscience &mdash; and send them home to serve.&rdquo;
+                </p>
+              </blockquote>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginTop: 34 }}>
+                <span style={{ width: 28, height: 1, background: "rgba(10,22,40,0.25)" }} />
+                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#374151" }}>Office of the President &middot; MCST</span>
+                <span style={{ width: 28, height: 1, background: "rgba(10,22,40,0.25)" }} />
+              </div>
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 
       {/* PROGRAMS PREVIEW */}
       <section style={{ padding: "100px 32px", background: CREAM_DARK }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20, borderBottom: "1px solid rgba(10,22,40,0.14)", paddingBottom: 24 }}>
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 14 }}>Academics</p>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: INK, lineHeight: 1.15 }}>Featured Programs</h2>
@@ -187,7 +217,7 @@ export default function Home() {
       {/* NEWS HUB */}
       <section style={{ padding: "100px 32px", background: CREAM }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20, borderBottom: "1px solid rgba(10,22,40,0.14)", paddingBottom: 24 }}>
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 14 }}>Campus Bulletin</p>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: INK, lineHeight: 1.15 }}>Latest News</h2>
@@ -222,7 +252,7 @@ export default function Home() {
       {/* CAMPUS PREVIEW MOSAIC */}
       <section style={{ padding: "100px 32px", background: CREAM_DARK }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 20, borderBottom: "1px solid rgba(10,22,40,0.14)", paddingBottom: 24 }}>
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 14 }}>Campus Moments</p>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 700, color: INK, lineHeight: 1.15 }}>Life at MCST</h2>
